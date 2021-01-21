@@ -18,7 +18,7 @@ director.start_game()
 # Requirements
 # Your program must also meet the following requirements.
 # 1. The program must use the Jumper template.
-# 2. The program must have a README file with assignment and author names.
+# 2. The program must have a README file with assignment and author names. (completed TM 1/20/2020)
 # 3. The program must have at least four classes.
 # 4. Each module, class and method must have a corresponding comment using 
 #    the style demonstrated in the solo checkpoint.
