@@ -1,5 +1,6 @@
 #the game class will compile all the other classes and do the rules
 import random
+import sys
 class Game: 
     def start_game(self):
         player = Player()
@@ -7,7 +8,17 @@ class Game:
         print(words.wordlist)
         theword =words.dealWord()
         display = Display( theword, player)
-        display.display()
+        keepGoing = True
+        while player.lives >0 and keepGoing == True:
+            guess = input("Guess a letter [a-z] or input ! to quit: ")
+            while len(guess) > 1:
+                print("Please only input one letter")
+                guess = input("Guess a letter [a-z]: ")
+            print("your input was ", guess)
+            if guess == "!":
+                keepGoing = False
+                break
+            display.display()
         print("the Word is", theword)
         
 
@@ -52,7 +63,9 @@ class Display:
     #the word class will choose the words that are needed for the jumper game
 class Words:
     def __init__(self):
-        self.wordlist = ["test", "something", "chicken", "a", "coding", "python", "classes"]
+        file = open("https://github.com/teresamoser/Team-7/tree/main/cse210-tc03/jumper_template/jumper/game/words.txt")       #open file
+        dataString = file.read()  #turn file into string
+        self.wordlist = dataString.split("\n")
     def dealWord(self):
         print("deal word")
         return self.wordlist[random.randint(0,len(self.wordlist)-1)]
