@@ -1,14 +1,17 @@
 #the game class will compile all the other classes and do the rules
 import random
 import sys
+
+DEFAULT_VALUE = "jumper_template\jumper\game\words.txt"
+FILENAME = sys.argv[1] if len(sys.argv) == 2 else DEFAULT_VALUE
 class Game: 
     def start_game(self):
         player = Player()
         words = Words()
-        print(words.wordlist)
         theword =words.dealWord()
         display = Display( theword, player)
         keepGoing = True
+        print("the Word is", theword)
         while player.lives >0 and keepGoing == True:
             guess = input("Guess a letter [a-z] or input ! to quit: ")
             while len(guess) > 1:
@@ -19,7 +22,6 @@ class Game:
                 keepGoing = False
                 break
             display.display()
-        print("the Word is", theword)
         
 
 # display will handle the display part of the game
@@ -63,7 +65,7 @@ class Display:
     #the word class will choose the words that are needed for the jumper game
 class Words:
     def __init__(self):
-        file = open("https://github.com/teresamoser/Team-7/tree/main/cse210-tc03/jumper_template/jumper/game/words.txt")       #open file
+        file = open(FILENAME)       #open file
         dataString = file.read()  #turn file into string
         self.wordlist = dataString.split("\n")
     def dealWord(self):
