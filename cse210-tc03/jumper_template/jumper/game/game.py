@@ -3,13 +3,13 @@ import random
 import sys
 
 DEFAULT_VALUE = "jumper_template\jumper\game\words.txt"
-FILENAME = sys.argv[1] if len(sys.argv) == 2 else DEFAULT_VALUE
+FILENAME = "words.txt" # sys.argv[1] if len(sys.argv) == 2 else DEFAULT_VALUE
 class Game: 
     def start_game(self):
         player = Player()
         words = Words()
         theword =words.dealWord()
-        display = Display( theword, player)
+        display = Display(theword, player)
         keepGoing = True
         print("the Word is", theword)
         while player.lives >0 and keepGoing == True:
@@ -21,6 +21,9 @@ class Game:
             if guess == "!":
                 keepGoing = False
                 break
+            for letter in theword:
+                if letter == guess:
+                    display.foundLetter(letter)
             display.display()
         
 
@@ -30,11 +33,13 @@ class Display:
         self.word = word
         self.player = player
         self.length = len(word)
+        self.letters = []
     def display(self):
-        x = 0
-        while x <self.length:
-            print("_ ", end = "",flush = True)
-            x +=1
+        for letter in self.word:
+            if letter in self.letters:
+                print(letter + " ", end = "",flush = True)
+            else:
+                print("_ ", end = "",flush = True)
         print()
         print()
         if self.player.lives > 4:
@@ -56,9 +61,8 @@ class Display:
         print("  /|\\")
         print("  / \\")
         print("^^^^^^^^^^^")
-            
-        
-
+    def foundLetter(self, letter):
+        self.letters.append(letter)
 
 
 

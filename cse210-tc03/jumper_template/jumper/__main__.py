@@ -1,7 +1,7 @@
-from game.director import Director
+from game.game import Game
 
-director = Director()
-director.start_game()
+game = Game()
+game.start_game()
 
 # Overview
 # Jumper is a game in which the player seeks to solve a puzzle by guessing 
