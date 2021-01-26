@@ -33,10 +33,10 @@ root                    (project root folder)
 * Python 3.8.0
 
 ## Authors
----
-* # TODO: Add your names and emails here
-Bethany Steiner   ste19005@byui.edu
-Daniel Buys       buy19001@byui.edu
-Matthew Tyra      tyr18001@byui.edu
-Teresa Moser      moserte@byui.edu
-William Quiroga   qui16012@byui.edu
+=======
+* # TODO: Add names and emails here
+          Bethany Steiner ste19005@byui.edu 
+          Daniel Buys buy19001@byui.edu 
+          Matthew Tyra tyr18001@byui.edu 
+          Teresa Moser moserte@byui.edu 
+          William Quiroga qui16012@byui.edu
