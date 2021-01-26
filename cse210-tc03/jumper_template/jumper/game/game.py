@@ -2,8 +2,8 @@
 import random
 import sys
 
-DEFAULT_VALUE = "jumper_template/jumper/game/words.txt"
-FILENAME = "words.txt" # sys.argv[1] if len(sys.argv) == 2 else DEFAULT_VALUE
+DEFAULT_VALUE = "cse210-tc03/jumper_template/jumper/game/words.txt"
+FILENAME = DEFAULT_VALUE # sys.argv[1] if len(sys.argv) == 2 else DEFAULT_VALUE
 class Game: 
     def start_game(self):
         player = Player()
@@ -37,7 +37,7 @@ class Display:
     def display(self):
         for letter in self.word:
             if letter in self.letters:
-                print(letter + " ", end = "",flush = True)
+                print(letter+ " ", end = "",flush = True)
             else:
                 print("_ ", end = "",flush = True)
         print()
@@ -60,9 +60,9 @@ class Display:
 
         if self.player.lives == 0:
             print("   x")
-            print("  /|\\")
-            print("  / \\")
-            print("^^^^^^^^^^^")
+        print("  /|\\")
+        print("  / \\")
+        print("^^^^^^^^^^^")    
 
     def foundLetter(self, letter):
         self.letters.append(letter)
