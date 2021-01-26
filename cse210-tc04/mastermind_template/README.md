@@ -34,7 +34,8 @@ root                    (project root folder)
 
 ## Authors
 ---
-* # TODO: Bethany Steiner ste19005@byui.edu 
+* # TODO: Add names and emails here
+          Bethany Steiner ste19005@byui.edu 
           Daniel Buys buy19001@byui.edu 
           Matthew Tyra tyr18001@byui.edu 
           Teresa Moser moserte@byui.edu 
