@@ -48,8 +48,8 @@ class Display:
     def __init__(self):
 
         print("------------------")
-        print("Player ", game.player1.name, ": ----, ****")
-        print("Player ", game.player2.name, ": ----, ****")
+        print("Player ", game.player1.name, "\t: ----, ****")
+        print("Player ", game.player2.name, "\t: ----, ****")
         print("------------------")
     def displayGuess(self, turn):
         print("------------------")
