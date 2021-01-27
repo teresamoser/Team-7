@@ -18,14 +18,14 @@ class Game:
 
 #player will account for a single player, their attempts, their name, etc
 class Player:
-        """A person taking part in a game. The responsibility of 
-           Player is to keep track of their identity and last guess.   
-        Stereotype: 
-             Information Holder
-         Attributes:
-             _name (string): The player's name.
-             _attempts (attempts): The player's last guess.
-        """
+        # """A person taking part in a game. The responsibility of 
+        #    Player is to keep track of their identity and last guess.   
+        # Stereotype: 
+        #      Information Holder
+        #  Attributes:
+        #      _name (string): The player's name.
+        #      _attempts (attempts): The player's last guess.
+        # """
     def __init__(self, name):
         self._name = name
         self._attempts = 0
@@ -33,65 +33,65 @@ class Player:
         self.lastguess = "----"
         self.lastguessOutput = "****"
         
-        """The class constructor.
-        Args:
-            self (Player): an instance of Player.
-        """
+        # """The class constructor.
+        # Args:
+        #     self (Player): an instance of Player.
+        # """
     def get_name(self):
         return self._name
     
-        """Returns the player's name.
-        Args:
-            self (Player): an instance of Player.
-        """    
+        # """Returns the player's name.
+        # Args:
+        #     self (Player): an instance of Player.
+        # """    
     def set_attempts(self, attempts):
         self._attempts = attempts
         
-        """Sets the player's last move to the given instance 
-            of Move.
-        Args:
-            self (Player): an instance of Player.
-            move (Move): an instance of Move
-        """
+        # """Sets the player's last move to the given instance 
+        #     of Move.
+        # Args:
+        #     self (Player): an instance of Player.
+        #     move (Move): an instance of Move
+        # """
         
 #roster class will help keep track of multiple players.
 class Roster:
-         """A collection of players. The responsibility of Roster is to keep track of the players.
-         Stereotype: 
-              Information Holder
-         Attributes:
-           _current (integer): The index of the current player.
-           _players (list): A list of Player objects.
-         """
+        #  """A collection of players. The responsibility of Roster is to keep track of the players.
+        #  Stereotype: 
+        #       Information Holder
+        #  Attributes:
+        #    _current (integer): The index of the current player.
+        #    _players (list): A list of Player objects.
+        #  """
     def __init__(self):
         self.current = -1
         self.players = []
-        """The class constructor.
-        Args:
-            self (Roster): an instance of Roster.
-        """      
+        # """The class constructor.
+        # Args:
+        #     self (Roster): an instance of Roster.
+        # """      
     def add_player(self, player):
         if player not in self.players:
             self.players.append(player)
-        """Adds the given player to the roster
-        Args:
-            self (Roster): An instance of Roster.
-            player (Player): The player object to add.
-        """
+        # """Adds the given player to the roster
+        # Args:
+        #     self (Roster): An instance of Roster.
+        #     player (Player): The player object to add.
+        # """
     def get_current(self):
         return self.players[self.current]
-        """Gets the current player object.
-        Args:
-            self (Roster): An instance of Roster.
-        Returns:
-            Player: The current player.
-        """
+        # """Gets the current player object.
+        # Args:
+        #     self (Roster): An instance of Roster.
+        # Returns:
+        #     Player: The current player.
+        # """
     def next_player(self):
         self.current = (self.current + 1) % len(self.players)
-        """Advances the turn to the next player.
-        Args:
-            self (Roster): An instance of Roster.
-        """
+        # """Advances the turn to the next player.
+        # Args:
+        #     self (Roster): An instance of Roster.
+        # """
 #number class will deal a number
 class Number:
     def __init__(self):
