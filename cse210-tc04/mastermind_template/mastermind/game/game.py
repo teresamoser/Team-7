@@ -5,11 +5,16 @@ import random
 #game class will compile all the other classes and call them appropriately
 class Game:
     def start_game(self):
-        self.player1 = Player(input("Enter a name for player 1:"))
-        self.player2 = Player(input("Enter a name for player 2:"))
+        self.theRoster = Roster()
+        numPlayers = int(input("Enter the number of players:"))
+        x = 1
+        while x <= numPlayers:
+            xString = str(x)
+            self.theRoster.add_player(Player(input("Enter a name for player "+ xString+ ": ")))
+            x+=1
+        print(self.theRoster.players)
         display = Display()
         self.number = Number()
-        self.turn = 1
         self.guesser = Guessing()
         print("Number is ", game.number.value)
         display.displayGuess(1)
@@ -113,13 +118,13 @@ class Display:
     def __init__(self):
 
         print("------------------")
-        print("Player ", game.player1.name, "\t: ----, ****")
-        print("Player ", game.player2.name, "\t: ----, ****")
+        for x in game.theRoster.players:
+            print("Player ", x.get_name(), "\t: ----, ****")
         print("------------------")
     def displayGuess(self, turn):
         print("------------------")
-        print("Player ", game.player1.name, ": ",game.player1.lastguess, game.player1.lastguessOutput)
-        print("Player ", game.player2.name, ": ",game.player2.lastguess, game.player2.lastguessOutput)
+        for x in game.theRoster.players:
+            print("Player ", x.get_name(), "\t: ",x.lastguess, x.lastguessOutput)
         print("------------------")       
 
 
