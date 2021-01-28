@@ -1,21 +1,25 @@
 
 
 import random
-
+import math
 #game class will compile all the other classes and call them appropriately
 class Game:
     def start_game(self):
-        self.theRoster = Roster()
+        self.the_roster = Roster()
         numPlayers = int(input("Enter the number of players:"))
         x = 1
+        self.number = Number()
         while x <= numPlayers:
             xString = str(x)
-            self.theRoster.add_player(Player(input("Enter a name for player "+ xString+ ": ")))
+            self.the_roster.add_player(Player(input("Enter a name for player "+ xString+ ": ")))
             x+=1
-        print(self.theRoster.players)
         display = Display()
-        self.number = Number()
         self.guesser = Guessing()
+        self.game_active = True
+        while self.game_active:
+            print("SOmething")
+            self.guesser.prompt_guess(self.the_roster.players, self.the_roster.current)
+            self.game_active = False
         print("Number is ", game.number.value)
         display.displayGuess(1)
 
@@ -32,25 +36,25 @@ class Player:
         #      _attempts (attempts): The player's last guess.
         # """
     def __init__(self, name):
-        self._name = name
-        self._attempts = 0
+        self.name = name
+        self.attempts = 0
         
-        self.lastguess = "----"
-        self.lastguessOutput = "****"
+        self.lastguess = ""
+        self.lastguessOutput = ""
         
         # """The class constructor.
         # Args:
         #     self (Player): an instance of Player.
         # """
     def get_name(self):
-        return self._name
+        return self.name
     
         # """Returns the player's name.
         # Args:
         #     self (Player): an instance of Player.
         # """    
     def set_attempts(self, attempts):
-        self._attempts = attempts
+        self.attempts = attempts
         
         # """Sets the player's last move to the given instance 
         #     of Move.
@@ -69,7 +73,7 @@ class Roster:
         #    _players (list): A list of Player objects.
         #  """
     def __init__(self):
-        self.current = -1
+        self.current = 0
         self.players = []
         # """The class constructor.
         # Args:
@@ -83,7 +87,7 @@ class Roster:
         #     self (Roster): An instance of Roster.
         #     player (Player): The player object to add.
         # """
-    def get_current(self):
+    def get_current_player(self):
         return self.players[self.current]
         # """Gets the current player object.
         # Args:
@@ -105,9 +109,15 @@ class Number:
 
 #the guessing class will prompt the both users to guess and send their guess to guessOutput
 class Guessing:
-    def promptGuess(self):
+    def prompt_guess(self, player_list, turn):
+        print( player_list[turn].name, "'s turn: ")
+        guess = input("What is your guess? ")
+        while (len(str(guess)) != game.number.length):
+            print("Your guess must be a number that is", game.number.length, "long. Try again")
+            guess = input("What is your guess? ")
+        player_list[turn].lastguess = int(guess)
+    def get_guess_output(self):
         print()
-
 #guessoutput will get called by guessing. It will take a single player's guess and validate it
 class GuessOutput:
     def __init__(self):
@@ -118,13 +128,36 @@ class Display:
     def __init__(self):
 
         print("------------------")
-        for x in game.theRoster.players:
-            print("Player ", x.get_name(), "\t: ----, ****")
+        for x in game.the_roster.players:
+            print("Player ", x.get_name(), "\t:   ", end="",flush=True)
+            y = 0
+            while y < game.number.length:
+                print("-", end = "", flush = True)
+                y += 1
+            print("  ", end="",flush=True)
+            y = 0
+            while y < game.number.length:
+                print("*", end = "", flush = True)
+                y += 1
+            print()
         print("------------------")
     def displayGuess(self, turn):
         print("------------------")
-        for x in game.theRoster.players:
-            print("Player ", x.get_name(), "\t: ",x.lastguess, x.lastguessOutput)
+        for x in game.the_roster.players:
+            print("Player ", x.get_name(), "\t: ",end="",flush=True)
+            if x.lastguess != "":
+                print(x.lastguess, x.lastguessOutput)
+            else:
+                y = 0
+                while y < game.number.length:
+                    print("-", end = "", flush = True)
+                    y += 1
+                print("  ", end="",flush=True)
+                y = 0
+                while y < game.number.length:
+                    print("*", end = "", flush = True)
+                    y += 1
+                print()
         print("------------------")       
 
 
