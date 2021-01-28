@@ -9,6 +9,7 @@ class Game:
         numPlayers = int(input("Enter the number of players:"))
         x = 1
         self.number = Number()
+        print("Number is ", game.number.value)
         while x <= numPlayers:
             xString = str(x)
             self.the_roster.add_player(Player(input("Enter a name for player "+ xString+ ": ")))
@@ -19,9 +20,9 @@ class Game:
         while self.game_active:
             print("SOmething")
             self.guesser.prompt_guess(self.the_roster.players, self.the_roster.current)
-            self.game_active = False
-        print("Number is ", game.number.value)
-        display.displayGuess(1)
+            display.displayGuess()
+            self.the_roster.next_player()
+        print(self.the_roster.get_current_player().name, "wins! ")
 
 
 
@@ -115,13 +116,35 @@ class Guessing:
         while (len(str(guess)) != game.number.length):
             print("Your guess must be a number that is", game.number.length, "long. Try again")
             guess = input("What is your guess? ")
-        player_list[turn].lastguess = int(guess)
-    def get_guess_output(self):
-        print()
+        guess = int(guess)
+        player_list[turn].lastguess = guess
+        player_list[turn].lastguessOutput = self.get_guess_output(guess)
+    def get_guess_output(self, guess):
+        output = GuessOutput()
+        return output.output(guess)
+
+
 #guessoutput will get called by guessing. It will take a single player's guess and validate it
 class GuessOutput:
-    def __init__(self):
-        print()
+
+    def output(self,guess):
+        the_output = ""
+        string_guess = str(guess)
+        string_number = str(game.number.value)
+        x = 0
+        while x < (len(string_guess)):
+            if string_guess[x] == string_number[x]:
+                the_output += "x"
+            elif string_guess[x] in string_number:
+                the_output += "o"
+            else:
+                the_output += "*"
+            x += 1
+        if(string_guess == string_number):
+            game.game_active = False
+        return the_output
+
+            
 
 #display will get called by guessing and will display the appropriate responses
 class Display:
@@ -141,7 +164,7 @@ class Display:
                 y += 1
             print()
         print("------------------")
-    def displayGuess(self, turn):
+    def displayGuess(self):
         print("------------------")
         for x in game.the_roster.players:
             print("Player ", x.get_name(), "\t: ",end="",flush=True)
@@ -152,7 +175,7 @@ class Display:
                 while y < game.number.length:
                     print("-", end = "", flush = True)
                     y += 1
-                print("  ", end="",flush=True)
+                print(" ", end="",flush=True)
                 y = 0
                 while y < game.number.length:
                     print("*", end = "", flush = True)
