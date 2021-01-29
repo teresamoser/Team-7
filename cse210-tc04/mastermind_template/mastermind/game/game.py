@@ -9,7 +9,6 @@ class Game:
         numPlayers = int(input("Enter the number of players:"))
         x = 1
         self.number = Number()
-        print("Number is ", game.number.value)
         while x <= numPlayers:
             xString = str(x)
             self.the_roster.add_player(Player(input("Enter a name for player "+ xString+ ": ")))
@@ -18,7 +17,7 @@ class Game:
         self.guesser = Guessing()
         self.game_active = True
         while self.game_active:
-            print("SOmething")
+            print("Keep Guessing!")
             self.guesser.prompt_guess(self.the_roster.players, self.the_roster.current)
             display.displayGuess()
             self.the_roster.next_player()
