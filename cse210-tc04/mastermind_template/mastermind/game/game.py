@@ -18,9 +18,10 @@ class Game:
         self.game_active = True
         while self.game_active:
             print("Keep Guessing!")
-
             self.guesser.prompt_guess(self.the_roster.players, self.the_roster.current)
             display.displayGuess()
+            if self.game_active == False:
+                break
             self.the_roster.next_player()
         print(self.the_roster.get_current_player().name, "wins! ")
 
