@@ -1,8 +1,16 @@
-
+from actor import Actor
+import random
 import os
-class Word(object):
+class Word(Actor):
     def __init__(self):
-       print() 
-os.chdir(r'speed_template/speed/game')
-file = open("words.txt")       #open file
-print(file.read())        
+        super(Word, self).__init__()
+        os.chdir(r'speed_template/speed/game')
+        file = open("words.txt")       #open file     
+        dataString = file.read()  #turn file into string
+        self.wordArray= dataString.split() #turn string into array
+        self.value = self.wordArray[random.randint(0,len(self.wordArray)-1)]
+        print(self.value)
+
+
+word = Word()
+
