@@ -9,8 +9,10 @@ class Word(Actor):
         dataString = file.read()  #turn file into string
         self.wordArray= dataString.split() #turn string into array
         self.value = self.wordArray[random.randint(0,len(self.wordArray)-1)]
+        self.set_text = self.value
         print(self.value)
-
+    def get_value(self):
+        return self.value
 
 word = Word()
 
