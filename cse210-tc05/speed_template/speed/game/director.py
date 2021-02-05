@@ -1,10 +1,10 @@
 # Teresa Moser--responsible for the edits to the class Director
 
 from time import sleep
-from game import constants
-from game.word import Word
-from game.player import Player
-from game.snake import Snake
+import constants
+from word import Word
+from player import Player
+# from snake import Snake
 
 
 class Director:
@@ -103,3 +103,4 @@ class Director:
 #                 self._snake.grow_tail()
 #             self._score.add_points(points)
 #             self._food.reset() 
+            print()
