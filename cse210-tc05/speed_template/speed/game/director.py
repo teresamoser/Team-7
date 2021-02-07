@@ -65,8 +65,9 @@ class Director:
         Args:
              self (Director): An instance of Director.
         """
-        self._wores()
+        self._words()
         self._player()
+        self._score()
 
         
     def _do_outputs(self):
