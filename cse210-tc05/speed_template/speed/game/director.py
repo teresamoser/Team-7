@@ -1,9 +1,9 @@
 # Teresa Moser responsible for entry in Class Director
 from time import sleep
 from game import constants
-from word import Word
-from player import Player
-from score import Score
+from game.word import Word
+from game.player import Player
+from game.player import Score
 
 class Director:
     """A code template for a person who directs the game. The responsibility of 

@@ -37,7 +37,7 @@ class Player:
         self.score = Score()
     
     def _addletter(self, letter):
-        if not letter == '*'
+        if not letter == '*':
             self.word += letter
 
     def clearword(self):

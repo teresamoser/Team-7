@@ -1,4 +1,4 @@
-from actor import Actor
+from game.actor import Actor
 import random
 import os
 from pathlib import Path
