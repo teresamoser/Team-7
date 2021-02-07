@@ -2,8 +2,13 @@
 from time import sleep
 from game import constants
 from game.word import Word
+<<<<<<< HEAD
 from game.player import Player
 from game.player import Score
+=======
+from player import Player
+from score import Score
+>>>>>>> db45fa09976ca94742ba8aec8a61830ab6ed6ff1
 
 class Director:
     """A code template for a person who directs the game. The responsibility of 
