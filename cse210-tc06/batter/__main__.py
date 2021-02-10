@@ -4,6 +4,7 @@ from game.director import Director
 from game.actor import Actor
 from game.point import Point
 from game.player import Player
+from game.ball import Ball
 from game.control_actors_action import ControlActorsAction
 from game.draw_actors_action import DrawActorsAction
 from game.handle_collisions_action import HandleCollisionsAction
@@ -21,7 +22,6 @@ def main(screen):
     y = int(constants.MAX_Y - 1)
     position = Point(x, y)
     paddle = Player()
-    paddle.set_text("===========")
     paddle.set_position(position)
     cast["paddle"] = [paddle]
 
@@ -38,7 +38,7 @@ def main(screen):
     y = int(constants.MAX_Y / 2)
     position = Point(x, y)
     velocity = Point(1, -1)
-    ball = Actor()
+    ball = Ball()
     ball.set_text("@")
     ball.set_position(position)
     ball.set_velocity(velocity)

@@ -8,14 +8,17 @@ from pathlib import Path
     Authors:
         Matt Tyra
 
-    Args:
-        position (Point): The given velocity.
 """
 
 
 class Player(Actor):
     def __init__(self):
         super(Player, self).__init__()
+        self.length = 22
+        text = ""
+        for i in range(self.length):
+            text += "="
+        self.set_text(text)
 
     def set_velocity(self, velocity):
         """Updates the actor's velocity to the given one.

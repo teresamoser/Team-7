@@ -5,6 +5,8 @@ from game.action import Action
 class HandleCollisionsAction(Action):
     """A code template for handling collisions. The responsibility of this class of objects is to update the game state when actors collide.
     
+    Authors:
+        Matt Tyra
     Stereotype:
         Controller
     """
@@ -15,12 +17,12 @@ class HandleCollisionsAction(Action):
         Args:
             cast (dict): The game actors {key: tag, value: list}.
         """
-        print()
-        # marquee = cast["marquee"][0] # there's only one
-        # robot = cast["robot"][0] # there's only one
-        # artifacts = cast["artifact"]
-        # marquee.set_text("")
-        # for artifact in artifacts:
-        #     if robot.get_position().equals(artifact.get_position()):
-        #         description = artifact.get_description()
-        #         marquee.set_text(description) 
+        ball = cast["ball"][0] # there's only one
+        paddle = cast["paddle"][0]
+        bricks = cast["brick"]
+        for brick in bricks:
+            if ball.get_position().equals(brick.get_position()):
+                print("touching")
+                ball.collide("brick")
+        if ball.get_position().equals(paddle.get_position()):
+            ball.collide("paddle")
