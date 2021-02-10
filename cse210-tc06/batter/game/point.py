@@ -1,6 +1,10 @@
 class Point:
     """Represents distance from an origin (0, 0).
 
+    Authors:
+        Matt Tyra
+
+
     Stereotype:
         Information Holder
 
@@ -58,6 +62,17 @@ class Point:
             integer: The vertical distance.
         """
         return self._y
+
+    def set_x(self, x):
+        """Updates the horizontal distance.
+       
+        """
+        self._x = x
+
+    def set_y(self, y):
+        """Updates the vertical distance.
+        """
+        self._y = y
 
     def is_zero(self):
         """Whether or not the point is zero or x = 0 and y = 0.

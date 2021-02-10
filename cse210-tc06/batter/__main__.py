@@ -3,6 +3,7 @@ from game import constants
 from game.director import Director
 from game.actor import Actor
 from game.point import Point
+from game.player import Player
 from game.control_actors_action import ControlActorsAction
 from game.draw_actors_action import DrawActorsAction
 from game.handle_collisions_action import HandleCollisionsAction
@@ -19,7 +20,7 @@ def main(screen):
     x = int(constants.MAX_X / 2)
     y = int(constants.MAX_Y - 1)
     position = Point(x, y)
-    paddle = Actor()
+    paddle = Player()
     paddle.set_text("===========")
     paddle.set_position(position)
     cast["paddle"] = [paddle]
