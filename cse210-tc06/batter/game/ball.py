@@ -24,5 +24,12 @@ class Ball(Actor):
             self._velocity.set_y(1)
         elif collision_type == "paddle":
             print("paddle")
-            self._velocity.set_y(0)
+            self._velocity.set_y(-1)
+        elif collision_type == "right_wall":
+            print("r_wall")
+            self._velocity.set_x(-1)
+        elif collision_type == "left_wall":
+            print("l_wall")
+            self._velocity.set_x(1)
+
 

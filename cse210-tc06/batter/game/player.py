@@ -7,14 +7,13 @@ from pathlib import Path
     
     Authors:
         Matt Tyra
-
 """
 
 
 class Player(Actor):
     def __init__(self):
         super(Player, self).__init__()
-        self.length = 22
+        self.length = 1
         text = ""
         for i in range(self.length):
             text += "="

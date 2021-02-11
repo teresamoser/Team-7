@@ -26,3 +26,7 @@ class HandleCollisionsAction(Action):
                 ball.collide("brick")
         if ball.get_position().equals(paddle.get_position()):
             ball.collide("paddle")
+        if ball.get_position().get_x() == constants.MAX_X-1:
+            ball.collide("right_wall")
+        if ball.get_position().get_x() == 1:
+            ball.collide("left_wall")
