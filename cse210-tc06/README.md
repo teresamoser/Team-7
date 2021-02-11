@@ -41,4 +41,5 @@ root                    (project root folder)
 ---
 * # TODO: Add your names and emails here
       Matthew Tyra tyr18001@byui.edu 
+      Teresa Moser moserte@byui.edu
 
