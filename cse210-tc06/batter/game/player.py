@@ -13,7 +13,8 @@ from pathlib import Path
 class Player(Actor):
     def __init__(self):
         super(Player, self).__init__()
-        self.length = 1
+        self.length = 25
+        self.score = 0
         text = ""
         for i in range(self.length):
             text += "="
