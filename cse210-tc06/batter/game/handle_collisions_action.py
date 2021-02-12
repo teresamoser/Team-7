@@ -23,15 +23,15 @@ class HandleCollisionsAction(Action):
         paddle = cast["paddle"][0]
         bricks = cast["brick"]
         for brick in bricks:
-            if ball.get_position().equals(brick.get_position()):
+            if ball.get_position().equals(brick.get_position()):        #if ball hits brick
                 ball.collide("brick")
                 score.increment_score()
         if ball.get_position().get_y() == constants.MAX_Y - 1:
-            if ball.get_position().get_x() >= paddle.get_position().get_x() and ball.get_position().get_x() <= paddle.get_position().get_x() + paddle.length -1:
+            if ball.get_position().get_x() >= paddle.get_position().get_x() and ball.get_position().get_x() <= paddle.get_position().get_x() + paddle.length -1: #if ball hits paddle
                 ball.collide("paddle")
             else:
                 ball.hit_ground()
-        if ball.get_position().get_x() == constants.MAX_X-1:
+        if ball.get_position().get_x() == constants.MAX_X-1: #if ball hits right wall
             ball.collide("right_wall")
-        if ball.get_position().get_x() == 1:
+        if ball.get_position().get_x() == 1: #if ball hits left wall
             ball.collide("left_wall")
