@@ -5,6 +5,7 @@ from game.actor import Actor
 from game.point import Point
 from game.player import Player
 from game.ball import Ball
+from game.brick import Brick
 from game.control_actors_action import ControlActorsAction
 from game.draw_actors_action import DrawActorsAction
 from game.handle_collisions_action import HandleCollisionsAction
