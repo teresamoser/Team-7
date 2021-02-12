@@ -3,6 +3,7 @@ from game import constants
 from game.director import Director
 from game.actor import Actor
 from game.point import Point
+from game.score import Score
 from game.player import Player
 from game.ball import Ball
 from game.brick import Brick
@@ -45,6 +46,9 @@ def main(screen):
     ball.set_starting_position(position)
     ball.set_velocity(velocity)
     cast["ball"] = [ball]
+    score = Score()
+    score.set_position(Point(4,0))
+    cast["score"] = [score]
     
     # create the script {key: tag, value: list}
     script = {}

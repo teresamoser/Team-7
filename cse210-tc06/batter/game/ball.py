@@ -33,6 +33,7 @@ class Ball(Actor):
         print("hit ground")
         self._position = self.starting_position
         self.random_velocity()
+        
     def random_velocity(self):
         rand_number_x = random.randint(0,1)
         rand_number_y = random.randint(0,1)
@@ -41,8 +42,8 @@ class Ball(Actor):
         if rand_number_y == 0:
             rand_number_y = -1
         rand_point = Point(rand_number_x,rand_number_y)
-
         self.set_velocity(rand_point)
+
     def set_starting_position(self,position):
         self.starting_position = position  
 

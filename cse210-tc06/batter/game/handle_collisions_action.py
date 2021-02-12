@@ -17,12 +17,15 @@ class HandleCollisionsAction(Action):
         Args:
             cast (dict): The game actors {key: tag, value: list}.
         """
+        score = cast["score"][0]
+        score.execute()
         ball = cast["ball"][0] # there's only one
         paddle = cast["paddle"][0]
         bricks = cast["brick"]
         for brick in bricks:
             if ball.get_position().equals(brick.get_position()):
                 ball.collide("brick")
+                score.increment_score()
         if ball.get_position().get_y() == constants.MAX_Y - 1:
             if ball.get_position().get_x() >= paddle.get_position().get_x() and ball.get_position().get_x() <= paddle.get_position().get_x() + paddle.length -1:
                 ball.collide("paddle")
