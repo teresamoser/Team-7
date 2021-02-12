@@ -22,11 +22,12 @@ class HandleCollisionsAction(Action):
         bricks = cast["brick"]
         for brick in bricks:
             if ball.get_position().equals(brick.get_position()):
-                print("touching")
                 ball.collide("brick")
         if ball.get_position().get_y() == constants.MAX_Y - 1:
             if ball.get_position().get_x() >= paddle.get_position().get_x() and ball.get_position().get_x() <= paddle.get_position().get_x() + paddle.length -1:
                 ball.collide("paddle")
+            else:
+                ball.hit_ground()
         if ball.get_position().get_x() == constants.MAX_X-1:
             ball.collide("right_wall")
         if ball.get_position().get_x() == 1:

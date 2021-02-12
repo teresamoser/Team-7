@@ -30,7 +30,7 @@ def main(screen):
     for x in range(5, 75):
         for y in range(2, 6):
             position = Point(x, y)
-            brick = Actor()
+            brick = Brick()
             brick.set_text("*")
             brick.set_position(position)
             cast["brick"].append(brick)
@@ -42,6 +42,7 @@ def main(screen):
     ball = Ball()
     ball.set_text("@")
     ball.set_position(position)
+    ball.set_starting_position(position)
     ball.set_velocity(velocity)
     cast["ball"] = [ball]
     

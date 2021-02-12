@@ -14,6 +14,7 @@ class Player(Actor):
     def __init__(self):
         super(Player, self).__init__()
         self.length = 25
+        self.lives = 5
         self.score = 0
         text = ""
         for i in range(self.length):
