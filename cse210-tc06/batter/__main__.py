@@ -4,6 +4,7 @@ from game.director import Director
 from game.actor import Actor
 from game.point import Point
 from game.score import Score
+from game.lives import Lives
 from game.player import Player
 from game.ball import Ball
 from game.brick import Brick
@@ -49,7 +50,10 @@ def main(screen):
     score = Score()
     score.set_position(Point(4,0))
     cast["score"] = [score]
-    
+    lives = Lives()
+    lives.set_position(Point(67,0))
+    cast["lives"] = [lives]
+
     # create the script {key: tag, value: list}
     script = {}
 

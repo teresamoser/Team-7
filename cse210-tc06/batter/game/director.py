@@ -30,6 +30,8 @@ class Director:
             self._cue_action("update")
             self._cue_action("output")
             sleep(constants.FRAME_LENGTH)
+            if self._cast["lives"][0].lives == 0:
+                break
 
     def _cue_action(self, tag):
         """Executes the actions with the given tag.

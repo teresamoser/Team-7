@@ -31,6 +31,10 @@ class HandleCollisionsAction(Action):
                 ball.collide("paddle")
             else:
                 ball.hit_ground()
+                lives = cast["lives"][0]
+                lives.decrement_lives()
+                lives.execute()
+        
         if ball.get_position().get_x() == constants.MAX_X-1: #if ball hits right wall
             ball.collide("right_wall")
         if ball.get_position().get_x() == 1: #if ball hits left wall
