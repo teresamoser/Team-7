@@ -31,6 +31,7 @@ class Director:
             self._cue_action("output")
             sleep(constants.FRAME_LENGTH)
             if self._cast["lives"][0].lives == 0:
+                print("your score is: ",self._cast["score"][0].score)
                 break
 
     def _cue_action(self, tag):
