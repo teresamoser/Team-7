@@ -29,6 +29,8 @@ class Ball(Actor):
             self._velocity.set_x(-1)
         elif collision_type == "left_wall":
             self._velocity.set_x(1)
+        elif collision_type == "ceiling":
+            self._velocity.set_y(1)
     def hit_ground(self):
         self._position = self.starting_position
         self.random_velocity()
