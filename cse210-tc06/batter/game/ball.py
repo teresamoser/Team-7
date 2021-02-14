@@ -22,7 +22,8 @@ class Ball(Actor):
 
         """
         if collision_type == "brick":
-            self._velocity.set_y(1)
+            if self._velocity.get_y() == -1:
+                self._velocity.set_y(1)
         elif collision_type == "paddle":
             self._velocity.set_y(-1)
         elif collision_type == "right_wall":
