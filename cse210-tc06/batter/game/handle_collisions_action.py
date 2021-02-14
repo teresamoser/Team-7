@@ -25,6 +25,7 @@ class HandleCollisionsAction(Action):
         for brick in bricks:
             if ball.get_position().equals(brick.get_position()):        #if ball hits brick
                 ball.collide("brick")
+                # bricks.remove("brick")
                 score.increment_score()
         if ball.get_position().get_y() == constants.MAX_Y - 1:
             if ball.get_position().get_x() >= paddle.get_position().get_x() and ball.get_position().get_x() <= paddle.get_position().get_x() + paddle.length -1: #if ball hits paddle
