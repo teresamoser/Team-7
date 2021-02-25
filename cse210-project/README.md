@@ -28,4 +28,5 @@ root                    (project root folder)
 ## Authors
 ---
 Teresa Moser tmoser.moser@gmail.com
+Matt Tyra    mtyra321@gmai.com
 

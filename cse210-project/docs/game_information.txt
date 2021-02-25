@@ -16,6 +16,17 @@ The goal of asking this question is to identify what will and what won't be incl
 
     #List features of Kaboom
 
+    Main Features:
+        bombs falling
+        basket moves with player (mirror mouse move?)
+        bombs speed up as time goes on (timed or by levels?)
+    Extra Features (if we get to them):
+        different types of bombs (bouncy ones, ones that don't fall straight down)
+        user power-ups (shield, trampoline)
+
+
 
 What is your timeline? 
 The answer to this question is mostly already decided. Just take a minute to review the rest of the course schedule together.
+
+    #map out milestones for each week
