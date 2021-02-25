@@ -1,5 +1,6 @@
-# [PROGRAM NAME] 
-[a description of the program]
+# Bomb's Away!
+Bomb's Away!: An arcade game where you control the tray of water at the bottom of 
+the screeen to catch all the falling bombs so the fuse is put out. The goal is not to miss one. 
 
 ## Getting Started
 ---
@@ -26,4 +27,5 @@ root                    (project root folder)
 
 ## Authors
 ---
-[list author names and emails]
+Teresa Moser tmoser.moser@gmail.com
+
