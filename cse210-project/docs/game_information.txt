@@ -1,0 +1,21 @@
+What program are we going to create? 
+Use your brainstorming from the solo checkpoint to answer this question together.
+
+    Kaboom: #put description of Kaboom
+
+
+
+What technologies will we use? 
+
+    We will use the Python Arcade Library and will code the program in Python
+
+
+
+What features will we include? 
+The goal of asking this question is to identify what will and what won't be included. Use this simple feature planning guide to help you.
+
+    #List features of Kaboom
+
+
+What is your timeline? 
+The answer to this question is mostly already decided. Just take a minute to review the rest of the course schedule together.
