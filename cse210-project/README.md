@@ -1,6 +1,6 @@
 # Bomb's Away!
 Bomb's Away!: An arcade game where you control the tray of water at the bottom of 
-the screeen to catch all the falling bombs so the fuse is put out. The goal is not to miss one. 
+the screeen to catch all the falling bombs so the fuse is put out. The goal is not to miss one or they will explode and the round ends. 
 
 ## Getting Started
 ---
