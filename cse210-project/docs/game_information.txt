@@ -18,11 +18,13 @@ The goal of asking this question is to identify what will and what won't be incl
 
     Main Features:
         bombs falling
-        basket moves with player (mirror mouse move?)
+        basket moves with user (mirror mouse move?)
         bombs speed up as time goes on (timed or by levels?)
     Extra Features (if we get to them):
         different types of bombs (bouncy ones, ones that don't fall straight down)
         user power-ups (shield, trampoline)
+        Have more than just bombs fall down (random objects, objects that effect the user)
+        Coins and shop system (buy more lives/speed between levels)
 
 
 
@@ -30,3 +32,8 @@ What is your timeline?
 The answer to this question is mostly already decided. Just take a minute to review the rest of the course schedule together.
 
     #map out milestones for each week
+    Week 9: Get the display working, doesn't matter what it displays
+    Week 10: Get the bombs to drop and the player to move with user mouse
+    Week 11: Get the bombs to hurt user, add collection and point system (with game over)
+    Week 12: Add special features like power ups and special bombs
+    Week 13: Add even more special features like a shop system
