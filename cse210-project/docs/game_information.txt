@@ -1,7 +1,9 @@
 What program are we going to create? 
 Use your brainstorming from the solo checkpoint to answer this question together.
 
-    Kaboom: #put description of Kaboom
+    # Bomb's Away!
+Bomb's Away!: An arcade game where you control the tray of water at the bottom of 
+the screeen to catch all the falling bombs so the fuse is put out. The goal is not to miss one or they will explode and the round ends. 
 
 
 
