@@ -27,6 +27,7 @@ root                    (project root folder)
 
 ## Authors
 ---
-Teresa Moser tmoser.moser@gmail.com
+Teresa Moser   tmoser.moser@gmail.com
 Matt Tyra    mtyra321@gmai.com
+Bethany Steiner    ste19005@byui.edu
 
