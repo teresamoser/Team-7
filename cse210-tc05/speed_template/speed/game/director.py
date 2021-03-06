@@ -3,7 +3,7 @@ from time import sleep
 from game import constants
 from game.word import Word
 from game.player import Player
-from game.player import Score
+from game.score import Score
 
 
 
@@ -30,7 +30,10 @@ class Director:
         self._output_service = output_ser
         self._keep_playing = True
         self._player = Player()
-        self._words = Word()
+        self._words = []
+        self._score = Score()
+        for item in range(5):
+            self._words.append( Word())
         # make default player, words
 
     def start_game(self):
@@ -52,8 +55,8 @@ class Director:
         Args:
             self (Director): An instance of Director.
         """
-        direction = self._input_service.get_word()
-        self._words.move(direction)
+        # direction = self._input_service.get_word()
+        # self._words.move(direction)
 
     def _do_updates(self):
         """Updates the important game information for each round of play. In 
@@ -62,9 +65,10 @@ class Director:
         Args:
              self (Director): An instance of Director.
         """
-        self._words()
-        self._player()
-        self._score()
+        for item in self._words:
+            item.move_next()
+        # self._player()
+        # self._score()
 
         
     def _do_outputs(self):

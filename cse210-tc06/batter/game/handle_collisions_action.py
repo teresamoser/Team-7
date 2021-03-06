@@ -3,8 +3,7 @@ from game import constants
 from game.action import Action
 
 class HandleCollisionsAction(Action):
-    """A code template for handling collisions. The responsibility of this class of objects is to 
-    update the game state when actors collide.
+    """A code template for handling collisions. The responsibility of this class of objects is to update the game state when actors collide.
     
     Authors:
         Matt Tyra
@@ -26,8 +25,8 @@ class HandleCollisionsAction(Action):
         for brick in bricks:
             if ball.get_position().equals(brick.get_position()):        #if ball hits brick
                 ball.collide("brick")
-                bricks.remove(brick)
                 score.increment_score()
+                bricks.remove(brick)
         if ball.get_position().get_y() == constants.MAX_Y - 1:
             if ball.get_position().get_x() >= paddle.get_position().get_x() and ball.get_position().get_x() <= paddle.get_position().get_x() + paddle.length -1: #if ball hits paddle
                 ball.collide("paddle")
@@ -41,3 +40,6 @@ class HandleCollisionsAction(Action):
             ball.collide("right_wall")
         if ball.get_position().get_x() == 1: #if ball hits left wall
             ball.collide("left_wall")
+        if ball.get_position().get_y() == 1: #if ball hits left wall
+            print("ceiling")
+            ball.collide("ceiling")        
