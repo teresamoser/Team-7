@@ -1,9 +1,8 @@
-TeresaM
 from game import constants
 from game.point import Point
 
-class Brick(Actor):
-    """A visible, object for the ball to hit. The responsibility of Actor is to keep track of its appearance, position 
+class Actor:
+    """A visible, moveable thing that participates in the game. The responsibility of Actor is to keep track of its appearance, position 
     and velocity in 2d space.
 
     Stereotype:
@@ -15,13 +14,13 @@ class Brick(Actor):
         _position (Point): The actor's position in 2d space.
         _velocity (Point): The actor's speed and direction.
     """
+
     def __init__(self):
         """The class constructor."""
-        self.brick = Brick
         self._description = ""
         self._text = ""
         self._position = Point(0, 0)
-        self._velocity = Point(0, 0)
+        self._velocity = Point(0, -1)
 
     def get_description(self):
         """Gets the artifact's description.
@@ -86,43 +85,3 @@ class Brick(Actor):
             position (Point): The given velocity.
         """
         self._velocity = velocity
-
-#do the brick class. Right now the ball bounces off of the bricks only from below,
-#  but the bricks to not disappear
-from game.actor import Actor
-import random
-import os
-from pathlib import Path
-
-"""Brick class. Used for overloading actor methods to ensure the brick behaves correctly
-    
-    Authors:
-       Teresa Moser
-"""
-
-class Brick(Actor):
-  
-    """ collision: When the ball collides with the bricks, we need the brick to disappear after collision
-    """
-    def execute(self, cast):
-        """Executes the action using the given actors.
-
-        Args:
-            cast (dict): The game actors {key: tag, value: list}.
-        """
-
-        bricks = cast["brick"]
-        for brick in bricks:
-            edge = intersect(brick, self.ball)
-            if not edge:
-                continue
- 
-            self.bricks.remove(brick)
-            self.objects.remove(brick)
-            self.score += self.points_per_brick
-
-            if edge in ('top', 'bottom'):
-                self.ball.velocity = (s[0], -s[1])
-            else:
-                self.ball.velocity = (-s[0], s[1])
-main
