@@ -1,5 +1,4 @@
 import arcade
-TeresaM
 from pathlib import Path
 
 arcade.open_window(600,600, "Kaboom")
@@ -8,8 +7,8 @@ file_dir = Path(__file__).parent
 #you have to be in the cse210-tc05 folder for the file to open
 # coordinates of image is the center of image
 #
-texture = arcade.load_texture(file_dir/"pictures/RedBomb.png")
-scale = .2 #size
+texture = arcade.load_texture(file_dir/"pictures/bomb.jpg")
+scale = .4 #size
 arcade.draw_scaled_texture_rectangle(100, 100, texture, scale, 30)
 arcade.finish_render()
 arcade.run()
