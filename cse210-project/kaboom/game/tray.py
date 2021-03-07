@@ -1,5 +1,5 @@
 from game.actor import Actor
-from game.constants import constants
+from game import constants
 
 class Tray(Actor):
     def __init__(self, position):

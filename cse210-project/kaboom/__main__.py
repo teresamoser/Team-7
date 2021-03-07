@@ -41,7 +41,7 @@ def main():
     # arcade.finish_render()
     move_actors_action = MoveActorsAction()
     handle_collisions_acition = HandleCollisionsAction()
-    input_service = InputService()
+    input_service = InputService(600,600, "KaboomInputService")
 
     script["update"] = [move_actors_action, handle_collisions_acition]
     script["input"] = [input_service]
