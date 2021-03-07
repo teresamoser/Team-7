@@ -33,7 +33,9 @@ def main():
     texture = arcade.load_texture(file_dir/bomb[random_index])
 
     cast["bomb"] = [Bomb(texture,scale, Point(400,500))]
-    cast["tray"] = [Tray(Point(300, 150))]
+    tray_texture = arcade.load_texture(file_dir/"pictures/tray.jpg")
+    cast["tray"] = [Tray(tray_texture,scale,Point(300, 150))]
+    arcade.set_background_color(arcade.color.AMAZON)
 
     #print(bomb[random_index])
 
@@ -41,10 +43,10 @@ def main():
     # arcade.finish_render()
     move_actors_action = MoveActorsAction()
     handle_collisions_acition = HandleCollisionsAction()
-    input_service = InputService(600,600, "KaboomInputService")
+   # input_service = InputService()
 
     script["update"] = [move_actors_action, handle_collisions_acition]
-    script["input"] = [input_service]
+    #script["input"] = [input_service]
 
     director = Director(cast, script)
     print("Starting game")

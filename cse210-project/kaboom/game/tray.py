@@ -1,9 +1,14 @@
 from game.actor import Actor
 from game import constants
+from game.point import Point
 
 class Tray(Actor):
-    def __init__(self, position):
+    def __init__(self,image, scale,position):
+        super(Tray, self).__init__()
         self.set_position(position)
+        self.image = image
+        self.scale = scale
+        self._velocity = Point(1, 0)
 
 
     def move_tray(self, mouse_x):
