@@ -5,6 +5,7 @@ from game.move_actors_action import MoveActorsAction
 from game.point import Point
 from game.bomb import Bomb
 import arcade
+import random
 
 
 def main():
@@ -14,11 +15,24 @@ def main():
    # arcade.draw_text("draw_bitmap", 483, 3, arcade.color.BLACK, 12)
     file_dir = Path(__file__).parent
     #you have to be in the cse210-tc05 folder for the file to open
+
     # coordinates of image is the center of image
-    #
-    texture = arcade.load_texture(file_dir/"pictures/Blue Bomb.jpg")
     scale = .4 #size\
+
+    #Create an array of the bomb pictures to be picked at random 
+    ABomb = "pictures/Black Bomb.png"
+    Blbomb = "pictures/Blue Bomb.jpg"
+    Bbomb = "pictures/Blue Bomb.jpg"
+    CBomb = "pictures/bomb.jpg"
+    DBomb = "pictures/RedBomb.png"
+    EBomb = "pictures/Small B Bomb.jpg"
+    bomb = [ABomb, Bbomb, CBomb, DBomb, EBomb, Blbomb]
+    random_index = random.randrange(len(bomb))
+    texture = arcade.load_texture(file_dir/bomb[random_index])
+
     cast["bomb"] = [Bomb(texture,scale, Point(400,500))]
+
+    #print(bomb[random_index])
 
     # arcade.draw_scaled_texture_rectangle(100, 100, texture, scale, 30)
     # arcade.finish_render()
