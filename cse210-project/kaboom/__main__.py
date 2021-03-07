@@ -4,6 +4,8 @@ from game.handle_collisions_action import HandleCollisionsAction
 from game.move_actors_action import MoveActorsAction
 from game.point import Point
 from game.bomb import Bomb
+from game.input_service import InputService
+from game.tray import Tray
 import arcade
 import random
 
@@ -31,6 +33,7 @@ def main():
     texture = arcade.load_texture(file_dir/bomb[random_index])
 
     cast["bomb"] = [Bomb(texture,scale, Point(400,500))]
+    cast["tray"] = [Tray(Point(300, 150))]
 
     #print(bomb[random_index])
 
@@ -38,8 +41,10 @@ def main():
     # arcade.finish_render()
     move_actors_action = MoveActorsAction()
     handle_collisions_acition = HandleCollisionsAction()
+    input_service = InputService()
 
     script["update"] = [move_actors_action, handle_collisions_acition]
+    script["input"] = [input_service]
 
     director = Director(cast, script)
     print("Starting game")
