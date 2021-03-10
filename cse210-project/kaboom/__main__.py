@@ -131,6 +131,7 @@ class MyGame(arcade.Window):
         self.player_list = arcade.SpriteList()
 
         # Set up the player
+        #change player to a tray/basket
         self.player_sprite = arcade.Sprite(":resources:images/animated_characters/female_person/femalePerson_idle.png", SPRITE_SCALING)
         self.player_sprite.center_x = 2 * GRID_PIXEL_SIZE
         self.player_sprite.center_y = 3 * GRID_PIXEL_SIZE
@@ -148,8 +149,7 @@ class MyGame(arcade.Window):
 
 
 
-#         #Create an array of the bomb pictures to be picked at random 
-
+#maybe have an enemy that has a bomb list, the enemy then randomly adds bombs to their bag and thus the screen overtime
         # Create platform moving up and down
         bombList = []
         for x in range(2,random.randint(2,20)):
