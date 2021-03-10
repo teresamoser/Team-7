@@ -152,10 +152,10 @@ class MyGame(arcade.Window):
 
         # Create platform moving up and down
         bombList = []
-        for x in range(0,20):
+        for x in range(2,random.randint(2,20)):
             bomb = Bomb(":resources:images/tiles/bomb.png",SPRITE_SCALING, Point(1 + random.randint(0,5),1+ random.randint(0,5)))
             bombList.append(bomb)
-
+        print(len(bombList))
         for x in bombList:
             wall = arcade.Sprite(x.image, x.scale)
             wall.center_y = x._position.get_y() * GRID_PIXEL_SIZE
