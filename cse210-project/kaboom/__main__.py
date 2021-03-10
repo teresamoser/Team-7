@@ -17,32 +17,32 @@ def main():
     #you have to be in the cse210-tc05 folder for the file to open
 
     # coordinates of image is the center of image
+    #
     texture = arcade.load_texture(file_dir/"pictures/Blue Bomb.jpg")
     scale = .4 #size\
-    cast["bomb"] = [Bomb(texture,scale, Point(400,500))]
 
     #Create an array of the bomb pictures to be picked at random 
-    texture = arcade.load_texture(file_dir/"pictures/Blue Bomb.jpg")
-    ABomb = arcade.load_texture(file_dir/"pictures/Black Bomb.png")
-    Bbomb = arcade.load_texture(file_dir/"pictures/Blue Bomb.jpg")
-    CBomb = arcade.load_texture(file_dir/"pictures/bomb.jpg")
-    DBomb = arcade.load_texture(file_dir/"pictures/RedBomb.png")
-    EBomb = arcade.load_texture(file_dir/"pictures/Small B Bomb.jpg")
-    bomb = ['ABomb', 'BBomb', 'CBomb', 'DBomb', 'EBomb']
+    ABomb = "pictures/Black Bomb.png"
+    Blbomb = "pictures/Blue Bomb.jpg"
+    Bbomb = "pictures/Blue Bomb.jpg"
+    CBomb = "pictures/bomb.jpg"
+    DBomb = "pictures/RedBomb.png"
+    EBomb = "pictures/Small B Bomb.jpg"
+    bomb = [ABomb, Bbomb, CBomb, DBomb, EBomb, Blbomb]
     random_index = random.randrange(len(bomb))
+    texture = arcade.load_texture(file_dir/bomb[random_index])
 
-    print(bomb[random_index])
+    cast["bomb"] = [Bomb(texture,scale, Point(400,500))]
+
+    #print(bomb[random_index])
 
     # arcade.draw_scaled_texture_rectangle(100, 100, texture, scale, 30)
     # arcade.finish_render()
     move_actors_action = MoveActorsAction()
     handle_collisions_acition = HandleCollisionsAction()
-
     script["update"] = [move_actors_action, handle_collisions_acition]
-
     director = Director(cast, script)
     print("Starting game")
     director.start_game()
-
 main()
 # program entry point
