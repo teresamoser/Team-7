@@ -75,9 +75,14 @@ class KaboomView(arcade.View):
             wall.center_y = x._position.get_y() * constants.GRID_PIXEL_SIZE
             wall.center_x = (x._position.get_x()) * constants.GRID_PIXEL_SIZE
             wall.boundary_top = 10 * constants.GRID_PIXEL_SIZE
+<<<<<<< Updated upstream
             
             if wall.boundary_bottom == 0 * constants.GRID_PIXEL_SIZE:
                 bomb = Bomb(":resources:images/titles/explode.png", constants.SPRITE_SCALING)
+=======
+            if wall.boundary_bottom ==0 * constants.GRID_PIXEL_SIZE:
+                bomb = Bomb(":resources:images/tiles/explode.png",constants.SPRITE_SCALING)
+>>>>>>> Stashed changes
 
             wall.change_y = 7 * constants.SPRITE_SCALING
 
