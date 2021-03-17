@@ -50,7 +50,7 @@ class KaboomView(arcade.View):
         self.player_sprite.center_x = 2 * constants.GRID_PIXEL_SIZE
         self.player_sprite.center_y = 3 * constants.GRID_PIXEL_SIZE
         self.player_list.append(self.player_sprite)
-
+ 
         # Create floor
         for i in range(30):
             wall = arcade.Sprite(":resources:images/tiles/grassMid.png", constants.SPRITE_SCALING)
@@ -64,31 +64,22 @@ class KaboomView(arcade.View):
 
 
         #maybe have an enemy that has a bomb list, the enemy then randomly adds bombs to their bag and thus the screen overtime
-        # Create platform moving up and down
-        bombList = []
-        for x in range(2,random.randint(2,20)):
-            bomb = Bomb(":resources:images/tiles/bomb.png",constants.SPRITE_SCALING, Point(1 + random.randint(0,5),1+ random.randint(0,5)))
-            bombList.append(bomb)
-        print(len(bombList))
-        for x in bombList:
-            wall = arcade.Sprite(x.image, x.scale)
-            wall.center_y = x._position.get_y() * constants.GRID_PIXEL_SIZE
-            wall.center_x = (x._position.get_x()) * constants.GRID_PIXEL_SIZE
+        # Create platform moving up and down :resources:images/tiles/bomb.png
+#"":resources:images/tiles/bomb.png"
+        for x in range(3,random.randint(4,20)):
+            wall = arcade.Sprite(":resources:images/tiles/bomb.png", constants.SPRITE_SCALING)
+            wall.center_y = 10*constants.GRID_PIXEL_SIZE
+            wall.center_x = (1 + random.randint(1,5) * constants.GRID_PIXEL_SIZE)
             wall.boundary_top = 10 * constants.GRID_PIXEL_SIZE
+            wall.boundary_bottom = 1 * constants.GRID_PIXEL_SIZE
+            print("wall center y is"+(str)(wall.center_y))
+            print("wall boundary bottom is"+(str)(wall.boundary_bottom))
 
-            
-            if wall.boundary_bottom ==0 * constants.GRID_PIXEL_SIZE:
-                bomb = Bomb(":resources:images/tiles/explode.png",constants.SPRITE_SCALING)
 
-
+            #how fast the bombs go
             wall.change_y = 7 * constants.SPRITE_SCALING
-
             self.all_wall_list.append(wall)
             self.moving_wall_list.append(wall)
-        
-
- 
-
         self.physics_engine = \
             arcade.PhysicsEnginePlatformer(self.player_sprite,
                                            self.all_wall_list,
@@ -115,6 +106,14 @@ class KaboomView(arcade.View):
         # Draw the sprites.
         self.static_wall_list.draw()
         self.moving_wall_list.draw()
+        file_dir = Path(__file__).parent.parent
+
+        for x in self.moving_wall_list:
+            if (x.center_y<= x.boundary_bottom + (3 * constants.GRID_PIXEL_SIZE)):
+                self.moving_wall_list.remove(x)
+                self.all_wall_list.remove(x)
+                
+                # x.set_texture(file_dir/"pictures/Explosion.png")
         self.player_list.draw()
 
         # Put the text on the screen.

@@ -13,3 +13,5 @@ class Bomb(Actor):
         self._position = position
         self.image = image
         self.scale = scale
+    def set_image(self, image):
+        self.image = image
