@@ -54,6 +54,7 @@ import random
 # # program entry point
 
 def main():
+
     """ Main method """
     window = arcade.Window(constants.SCREEN_WIDTH, constants.SCREEN_HEIGHT, constants.SCREEN_TITLE)
     start_view = StartView()
