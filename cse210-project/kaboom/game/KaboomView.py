@@ -46,7 +46,9 @@ class KaboomView(arcade.View):
 
         # Set up the player
         #change player to a tray/basket
-        self.player_sprite = arcade.Sprite(":resources:images/animated_characters/female_person/femalePerson_idle.png", constants.SPRITE_SCALING)
+        file_dir = Path(__file__).parent.parent
+
+        self.player_sprite = arcade.Sprite(file_dir/"pictures/bucket.png", constants.SPRITE_SCALING)
         self.player_sprite.center_x = 2 * constants.GRID_PIXEL_SIZE
         self.player_sprite.center_y = 3 * constants.GRID_PIXEL_SIZE
         self.player_list.append(self.player_sprite)
