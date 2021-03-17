@@ -48,10 +48,11 @@ class KaboomView(arcade.View):
         #change player to a tray/basket
         file_dir = Path(__file__).parent.parent
 
-        self.player_sprite = arcade.Sprite(file_dir/"pictures/bucket.png", constants.SPRITE_SCALING)
+        self.player_sprite = arcade.Sprite(file_dir/"pictures/bucket.png", 0.3)
         self.player_sprite.center_x = 2 * constants.GRID_PIXEL_SIZE
-        self.player_sprite.center_y = 3 * constants.GRID_PIXEL_SIZE
+        self.player_sprite.center_y = 2 * constants.GRID_PIXEL_SIZE
         self.player_list.append(self.player_sprite)
+      
  
         # Create floor
         for i in range(30):
@@ -74,8 +75,7 @@ class KaboomView(arcade.View):
             wall.center_x = (1 + random.randint(1,5) * constants.GRID_PIXEL_SIZE)
             wall.boundary_top = 10 * constants.GRID_PIXEL_SIZE
             wall.boundary_bottom = 1 * constants.GRID_PIXEL_SIZE
-            print("wall center y is"+(str)(wall.center_y))
-            print("wall boundary bottom is"+(str)(wall.boundary_bottom))
+
 
 
             #how fast the bombs go
@@ -111,7 +111,7 @@ class KaboomView(arcade.View):
         file_dir = Path(__file__).parent.parent
 
         for x in self.moving_wall_list:
-            if (x.center_y<= x.boundary_bottom + (3 * constants.GRID_PIXEL_SIZE)):
+            if (x.center_y<= x.boundary_bottom + (2 * constants.GRID_PIXEL_SIZE)):
                 self.moving_wall_list.remove(x)
                 self.all_wall_list.remove(x)
                 
@@ -130,10 +130,8 @@ class KaboomView(arcade.View):
         """
         Called whenever the mouse moves.
         """
-        if key == arcade.key.UP:
-            if self.physics_engine.can_jump():
-                self.player_sprite.change_y = constants.JUMP_SPEED
-        elif key == arcade.key.LEFT:
+
+        if key == arcade.key.LEFT:
             self.player_sprite.change_x = -constants.MOVEMENT_SPEED
         elif key == arcade.key.RIGHT:
             self.player_sprite.change_x = constants.MOVEMENT_SPEED
@@ -157,33 +155,33 @@ class KaboomView(arcade.View):
 
         changed = False
 
-        # Scroll left
+        # # Scroll left
         left_boundary = self.view_left + constants.VIEWPORT_MARGIN
-        if self.player_sprite.left < left_boundary:
-            self.view_left -= left_boundary - self.player_sprite.left
+        if self.player_sprite.left <= left_boundary -100:
+            self.player_sprite.left = left_boundary-100
             changed = True
 
-        # Scroll right
+        # # Scroll right
         right_boundary = self.view_left + constants.SCREEN_WIDTH - constants.RIGHT_MARGIN
-        if self.player_sprite.right > right_boundary:
-            self.view_left += self.player_sprite.right - right_boundary
+        if self.player_sprite.right >= right_boundary + 300:
+            self.player_sprite.right = right_boundary+ 300
             changed = True
 
-        # Scroll up
-        top_boundary = self.view_bottom + constants.SCREEN_HEIGHT - constants.VIEWPORT_MARGIN
-        if self.player_sprite.top > top_boundary:
-            self.view_bottom += self.player_sprite.top - top_boundary
-            changed = True
+        # # Scroll up
+        # top_boundary = self.view_bottom + constants.SCREEN_HEIGHT - constants.VIEWPORT_MARGIN
+        # if self.player_sprite.top > top_boundary:
+        #     self.view_bottom += self.player_sprite.top - top_boundary
+        #     changed = True
 
-        # Scroll down
-        bottom_boundary = self.view_bottom + constants.VIEWPORT_MARGIN
-        if self.player_sprite.bottom < bottom_boundary:
-            self.view_bottom -= bottom_boundary - self.player_sprite.bottom
-            changed = True
+        # # Scroll down
+        # bottom_boundary = self.view_bottom + constants.VIEWPORT_MARGIN
+        # if self.player_sprite.bottom < bottom_boundary:
+        #     self.view_bottom -= bottom_boundary - self.player_sprite.bottom
+        #     changed = True
 
         # If we need to scroll, go ahead and do it.
-        if changed:
-            arcade.set_viewport(self.view_left,
-                                constants.SCREEN_WIDTH + self.view_left,
-                                self.view_bottom,
-                                constants.SCREEN_HEIGHT + self.view_bottom)
+        # if changed:
+        #     arcade.set_viewport(self.view_left,
+        #                         constants.SCREEN_WIDTH + self.view_left,
+        #                         self.view_bottom,
+        #                         constants.SCREEN_HEIGHT + self.view_bottom)
