@@ -101,6 +101,7 @@ class KaboomView(arcade.View):
         self.enemy_list.draw()
 
         for x in self.moving_wall_list:
+            #this is in charge of deleting the bombs. The 2 * grid pixel size is the x that it disappears at.
             if (x.center_y<= x.boundary_bottom + (2 * constants.GRID_PIXEL_SIZE)):
                 self.moving_wall_list.remove(x)
                 self.all_wall_list.remove(x)
@@ -132,10 +133,12 @@ class KaboomView(arcade.View):
         """
         if key == arcade.key.LEFT or key == arcade.key.RIGHT:
             self.player_sprite.change_x = 0
+    #this function spawns the bombs
     def spawn_bomb(self):
         print()
         wall = arcade.Sprite(":resources:images/tiles/bomb.png", constants.SPRITE_SCALING)
         wall.center_y = 11*constants.GRID_PIXEL_SIZE
+        #set the x to the enemy's location, as if he dropped it
         wall.center_x = self.bomber_man_sprite.center_x
         wall.boundary_top = 11 * constants.GRID_PIXEL_SIZE
         wall.boundary_bottom = 1 * constants.GRID_PIXEL_SIZE
