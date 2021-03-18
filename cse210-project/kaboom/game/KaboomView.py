@@ -70,19 +70,7 @@ class KaboomView(arcade.View):
 
 
 
-        for x in range(3,random.randint(4,20)):
-            wall = arcade.Sprite(":resources:images/tiles/bomb.png", constants.SPRITE_SCALING)
-            wall.center_y = 11*constants.GRID_PIXEL_SIZE
-            wall.center_x = (1 + random.randint(1,5) * constants.GRID_PIXEL_SIZE)
-            wall.boundary_top = 11 * constants.GRID_PIXEL_SIZE
-            wall.boundary_bottom = 1 * constants.GRID_PIXEL_SIZE
 
-
-
-            #how fast the bombs go
-            wall.change_y = 7 * constants.SPRITE_SCALING
-            self.all_wall_list.append(wall)
-            self.moving_wall_list.append(wall)
         self.physics_engine = \
             arcade.PhysicsEnginePlatformer(self.player_sprite,
                                            self.all_wall_list,
@@ -144,7 +132,17 @@ class KaboomView(arcade.View):
         """
         if key == arcade.key.LEFT or key == arcade.key.RIGHT:
             self.player_sprite.change_x = 0
-
+    def spawn_bomb(self):
+        print()
+        wall = arcade.Sprite(":resources:images/tiles/bomb.png", constants.SPRITE_SCALING)
+        wall.center_y = 11*constants.GRID_PIXEL_SIZE
+        wall.center_x = self.bomber_man_sprite.center_x
+        wall.boundary_top = 11 * constants.GRID_PIXEL_SIZE
+        wall.boundary_bottom = 1 * constants.GRID_PIXEL_SIZE
+        #how fast the bombs go
+        wall.change_y = 7 * constants.SPRITE_SCALING
+        self.all_wall_list.append(wall)
+        self.moving_wall_list.append(wall)
     def on_update(self, delta_time):
         """ Movement and game logic """
 
@@ -153,7 +151,9 @@ class KaboomView(arcade.View):
 
         # --- Manage Scrolling ---
         self.enemy_list.update()
-
+        x = random.randint(0,70)
+        if x == 4:
+            self.spawn_bomb()
         # Track if we need to change the viewport
         left_boundary = self.view_left + constants.VIEWPORT_MARGIN -100
         right_boundary = self.view_left + constants.SCREEN_WIDTH - constants.RIGHT_MARGIN + 300
