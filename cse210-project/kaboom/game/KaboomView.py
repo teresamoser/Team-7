@@ -24,7 +24,7 @@ class KaboomView(arcade.View):
         # Drawing non-moving walls separate from moving walls improves performance.
         self.static_wall_list = None
         self.moving_wall_list = None
-
+        self.enemy_list = None
         self.player_list = None
 
         # Set up the player
@@ -43,6 +43,7 @@ class KaboomView(arcade.View):
         self.static_wall_list = arcade.SpriteList()
         self.moving_wall_list = arcade.SpriteList()
         self.player_list = arcade.SpriteList()
+        self.enemy_list = arcade.SpriteList()
 
         # Set up the player
         #change player to a tray/basket
@@ -52,8 +53,13 @@ class KaboomView(arcade.View):
         self.player_sprite.center_x = 2 * constants.GRID_PIXEL_SIZE
         self.player_sprite.center_y = 2 * constants.GRID_PIXEL_SIZE
         self.player_list.append(self.player_sprite)
-      
- 
+        self.bomber_man_sprite = arcade.Sprite(file_dir/"pictures/bomber man.png", 0.06)
+        self.bomber_man_sprite.center_x = 2 * constants.GRID_PIXEL_SIZE
+        self.bomber_man_sprite.center_y = 12 * constants.GRID_PIXEL_SIZE
+        self.bomber_man_sprite.change_x = 7 * constants.SPRITE_SCALING
+
+        self.enemy_list.append(self.bomber_man_sprite)
+
         # Create floor
         for i in range(30):
             wall = arcade.Sprite(":resources:images/tiles/grassMid.png", constants.SPRITE_SCALING)
@@ -64,16 +70,11 @@ class KaboomView(arcade.View):
 
 
 
-
-
-        #maybe have an enemy that has a bomb list, the enemy then randomly adds bombs to their bag and thus the screen overtime
-        # Create platform moving up and down :resources:images/tiles/bomb.png
-#"":resources:images/tiles/bomb.png"
         for x in range(3,random.randint(4,20)):
             wall = arcade.Sprite(":resources:images/tiles/bomb.png", constants.SPRITE_SCALING)
-            wall.center_y = 10*constants.GRID_PIXEL_SIZE
+            wall.center_y = 11*constants.GRID_PIXEL_SIZE
             wall.center_x = (1 + random.randint(1,5) * constants.GRID_PIXEL_SIZE)
-            wall.boundary_top = 10 * constants.GRID_PIXEL_SIZE
+            wall.boundary_top = 11 * constants.GRID_PIXEL_SIZE
             wall.boundary_bottom = 1 * constants.GRID_PIXEL_SIZE
 
 
@@ -109,6 +110,7 @@ class KaboomView(arcade.View):
         self.static_wall_list.draw()
         self.moving_wall_list.draw()
         file_dir = Path(__file__).parent.parent
+        self.enemy_list.draw()
 
         for x in self.moving_wall_list:
             if (x.center_y<= x.boundary_bottom + (2 * constants.GRID_PIXEL_SIZE)):
@@ -150,21 +152,28 @@ class KaboomView(arcade.View):
         self.physics_engine.update()
 
         # --- Manage Scrolling ---
+        self.enemy_list.update()
 
         # Track if we need to change the viewport
+        left_boundary = self.view_left + constants.VIEWPORT_MARGIN -100
+        right_boundary = self.view_left + constants.SCREEN_WIDTH - constants.RIGHT_MARGIN + 300
 
+  #      If the self.bomber_man_sprite hit the left boundary, reverse
+        if self.bomber_man_sprite.left <= left_boundary:
+            self.bomber_man_sprite.change_x *= -1
+        # If the self.bomber_man_sprite hit the right boundary, reverse
+        elif self.bomber_man_sprite.right > right_boundary:
+            self.bomber_man_sprite.change_x *= -1
         changed = False
 
         # # Scroll left
-        left_boundary = self.view_left + constants.VIEWPORT_MARGIN
-        if self.player_sprite.left <= left_boundary -100:
-            self.player_sprite.left = left_boundary-100
+        if self.player_sprite.left <= left_boundary:
+            self.player_sprite.left = left_boundary
             changed = True
 
         # # Scroll right
-        right_boundary = self.view_left + constants.SCREEN_WIDTH - constants.RIGHT_MARGIN
-        if self.player_sprite.right >= right_boundary + 300:
-            self.player_sprite.right = right_boundary+ 300
+        if self.player_sprite.right >= right_boundary:
+            self.player_sprite.right = right_boundary
             changed = True
 
         # # Scroll up
