@@ -9,7 +9,7 @@ import random
 class KaboomView(arcade.View):
     """ Main application class. """
 
-    def __init__(self):
+    def __init__(self, level,score):
         """
         Initializer
         """
@@ -17,10 +17,10 @@ class KaboomView(arcade.View):
         super().__init__()
 
         # Sprite lists
-
+        self.level = level
         # We use an all-wall list to check for collisions.
         self.all_wall_list = None
-
+        self.score = score
         # Drawing non-moving walls separate from moving walls improves performance.
         self.static_wall_list = None
         self.moving_wall_list = None
@@ -122,28 +122,28 @@ class KaboomView(arcade.View):
         Called whenever the mouse moves.
         """
 
-        if key == arcade.key.LEFT:
+        if key == arcade.key.LEFT or key == arcade.key.A:
             self.player_sprite.change_x = -constants.MOVEMENT_SPEED
-        elif key == arcade.key.RIGHT:
+        elif key == arcade.key.RIGHT or key == arcade.key.D:
             self.player_sprite.change_x = constants.MOVEMENT_SPEED
-
+        elif key == arcade.key.P:
+            self.level_over()
     def on_key_release(self, key, modifiers):
         """
         Called when the user presses a mouse button.
         """
-        if key == arcade.key.LEFT or key == arcade.key.RIGHT:
+        if key == arcade.key.LEFT or key == arcade.key.RIGHT or key == arcade.key.D or key == arcade.key.A:
             self.player_sprite.change_x = 0
     #this function spawns the bombs
     def spawn_bomb(self):
-        print()
         wall = arcade.Sprite(":resources:images/tiles/bomb.png", constants.SPRITE_SCALING)
         wall.center_y = 11*constants.GRID_PIXEL_SIZE
         #set the x to the enemy's location, as if he dropped it
         wall.center_x = self.bomber_man_sprite.center_x
         wall.boundary_top = 11 * constants.GRID_PIXEL_SIZE
-        wall.boundary_bottom = 1 * constants.GRID_PIXEL_SIZE
+        wall.boundary_bottom = 0 
         #how fast the bombs go
-        wall.change_y = 7 * constants.SPRITE_SCALING
+        wall.change_y = (4 + self.level) * constants.SPRITE_SCALING
         self.all_wall_list.append(wall)
         self.moving_wall_list.append(wall)
     def on_update(self, delta_time):
@@ -154,7 +154,7 @@ class KaboomView(arcade.View):
 
         # --- Manage Scrolling ---
         self.enemy_list.update()
-        x = random.randint(0,70)
+        x = random.randint(0,70-(self.level * 2))
         if x == 4:
             self.spawn_bomb()
         # Track if we need to change the viewport
@@ -169,31 +169,39 @@ class KaboomView(arcade.View):
             self.bomber_man_sprite.change_x *= -1
         changed = False
 
-        # # Scroll left
         if self.player_sprite.left <= left_boundary:
             self.player_sprite.left = left_boundary
             changed = True
 
-        # # Scroll right
         if self.player_sprite.right >= right_boundary:
             self.player_sprite.right = right_boundary
             changed = True
+    def level_over(self):
+        game_view = ChangeLevelView(self.level,self.score)
+        self.window.show_view(game_view)        
 
-        # # Scroll up
-        # top_boundary = self.view_bottom + constants.SCREEN_HEIGHT - constants.VIEWPORT_MARGIN
-        # if self.player_sprite.top > top_boundary:
-        #     self.view_bottom += self.player_sprite.top - top_boundary
-        #     changed = True
 
-        # # Scroll down
-        # bottom_boundary = self.view_bottom + constants.VIEWPORT_MARGIN
-        # if self.player_sprite.bottom < bottom_boundary:
-        #     self.view_bottom -= bottom_boundary - self.player_sprite.bottom
-        #     changed = True
 
-        # If we need to scroll, go ahead and do it.
-        # if changed:
-        #     arcade.set_viewport(self.view_left,
-        #                         constants.SCREEN_WIDTH + self.view_left,
-        #                         self.view_bottom,
-        #                         constants.SCREEN_HEIGHT + self.view_bottom)
+
+
+class ChangeLevelView(arcade.View):
+    def __init__(self, level,score):
+        self.level = level
+        self.score = score
+        super().__init__()
+    def on_show(self):
+        arcade.set_background_color(arcade.csscolor.DARK_SLATE_BLUE)
+    def on_draw(self):
+        """ Draw this view """
+        arcade.start_render()
+        arcade.draw_text("You completed level " +(str)(self.level), constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2,
+                         arcade.color.WHITE, font_size=50, anchor_x="center")
+        arcade.draw_text("Your score: " + (str)(self.score), constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2-75,
+                         arcade.color.WHITE, font_size=20, anchor_x="center")                         
+        arcade.draw_text("Click to Start next level!", constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2-150,
+                         arcade.color.WHITE, font_size=20, anchor_x="center")
+    def on_mouse_press(self, _x, _y, _button, _modifiers):
+        """ If the user presses the mouse button, start the game. """
+        game_view = KaboomView(self.level + 1, self.score)
+        game_view.setup()
+        self.window.show_view(game_view)

@@ -1,24 +1,27 @@
 import arcade
 from game import constants
-from game.KaboomView import KaboomView
-
-class StartView(arcade.View):
-    def __init__(self):
-         super().__init__()
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from game.KaboomView import KaboomView
+class ChangeLevelView(arcade.View):
+    def __init__(self, level,score):
+        self.level = level
+        self.score = score
+        super().__init__()
     def on_show(self):
         arcade.set_background_color(arcade.csscolor.DARK_SLATE_BLUE)
     def on_draw(self):
         """ Draw this view """
         arcade.start_render()
-        arcade.draw_text("Kaboom", constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2,
+        arcade.draw_text("You completed level" +(str)(self.level), constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2,
                          arcade.color.WHITE, font_size=50, anchor_x="center")
-        arcade.draw_text("Catch all the bombs before they explode. \nUse the arrow keys or wasd to move", constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2-75,
+        arcade.draw_text("Your score: " + (str)(self.score), constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2-75,
                          arcade.color.WHITE, font_size=20, anchor_x="center")                         
-        arcade.draw_text("Click to Start!", constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2-150,
+        arcade.draw_text("Click to Start next level!", constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2-150,
                          arcade.color.WHITE, font_size=20, anchor_x="center")
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         """ If the user presses the mouse button, start the game. """
-        game_view = KaboomView(1,0)
+        game_view = KaboomView(self.level + 1, self.score)
         game_view.setup()
         self.window.show_view(game_view)
 
