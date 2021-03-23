@@ -109,11 +109,28 @@ class KaboomView(arcade.View):
                 
                 # if(bomb goes in bucket):
                 #     sound = arcade.Sound(file_dir/"sounds/steam hiss.wav")
-
+                if x.collides_with_sprite(self.player_sprite):
+                    print("collide")
+                    sound = arcade.Sound(file_dir/"sounds/steam hiss.wav")
+                    #score add
+                else:
+                    print()
+                    #life drop
                 sound.play()
                 self.bomb_list.remove(x)
                 
                 # x.set_texture(file_dir/"pictures/Explosion.png")
+        for x in self.power_up_list:
+            sound = arcade.Sound(":resources:sounds/upgrade3.wav")    
+            #this is in charge of deleting the bombs. The 2 * grid pixel size is the x that it disappears at.
+            if (x.center_y<= x.boundary_bottom + (2 * constants.GRID_PIXEL_SIZE)):
+                
+                # if(bomb goes in bucket):
+                #     sound = arcade.Sound(file_dir/"sounds/steam hiss.wav")
+                if x.collides_with_sprite(self.player_sprite):
+                    print("collide")
+                sound.play()
+                self.power_up_list.remove(x)
         self.player_list.draw()
 
         # Put the text on the screen.
@@ -150,7 +167,6 @@ class KaboomView(arcade.View):
     def spawn_power_up(self):
         file_dir = Path(__file__).parent.parent
         rand_num = random.randint(1,2)
-        print(f"rand num is {rand_num}")
         if rand_num == 1:
             power_up = PowerUp(file_dir/"pictures/strength.png", 0.2, "strength")
         if rand_num == 2:
