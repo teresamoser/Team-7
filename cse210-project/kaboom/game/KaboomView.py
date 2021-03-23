@@ -112,7 +112,6 @@ class KaboomView(arcade.View):
 
                 sound.play()
                 self.bomb_list.remove(x)
-                self.all_wall_list.remove(x)
                 
                 # x.set_texture(file_dir/"pictures/Explosion.png")
         self.player_list.draw()
@@ -168,7 +167,6 @@ class KaboomView(arcade.View):
         wall.boundary_bottom = 0 
         #how fast the bombs go
         wall.change_y = -(4 + self.level) * constants.SPRITE_SCALING
-        self.all_wall_list.append(wall)
         self.bomb_list.append(wall)
         
     def on_update(self, delta_time):
@@ -180,6 +178,7 @@ class KaboomView(arcade.View):
         # --- Manage Scrolling ---
         self.enemy_list.update()
         self.power_up_list.update()
+        self.bomb_list.update()
         #
         #
         #The next few lines controls how often the bombs spawn
