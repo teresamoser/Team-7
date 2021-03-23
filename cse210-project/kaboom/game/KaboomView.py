@@ -129,6 +129,7 @@ class KaboomView(arcade.View):
                 #     sound = arcade.Sound(file_dir/"sounds/steam hiss.wav")
                 if x.collides_with_sprite(self.player_sprite):
                     print("collide")
+                    self.power_up_effect(x.type)
                 sound.play()
                 self.power_up_list.remove(x)
         self.player_list.draw()
@@ -163,12 +164,12 @@ class KaboomView(arcade.View):
         if power_up == "stretch":
             self.player_sprite._set_width(400)
         if power_up == "speed":
-            self.player_sprite._set_width(400)        
+            self.player_sprite.change_x *= 1.5       
     def spawn_power_up(self):
         file_dir = Path(__file__).parent.parent
         rand_num = random.randint(1,2)
         if rand_num == 1:
-            power_up = PowerUp(file_dir/"pictures/strength.png", 0.2, "strength")
+            power_up = PowerUp(file_dir/"pictures/strength.png", 0.2, "stretch")
         if rand_num == 2:
             power_up = PowerUp(file_dir/"pictures/speed.png", 0.2, "speed")
         power_up.center_y = 15*constants.GRID_PIXEL_SIZE
