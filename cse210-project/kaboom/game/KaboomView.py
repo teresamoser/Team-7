@@ -4,7 +4,7 @@ from game.point import Point
 from game import constants
 import arcade
 import random
-
+from game.power_up import PowerUp
 
 class KaboomView(arcade.View):
     """ Main application class. """
@@ -149,7 +149,12 @@ class KaboomView(arcade.View):
             self.player_sprite._set_width(400)        
     def spawn_power_up(self):
         file_dir = Path(__file__).parent.parent
-        power_up = arcade.Sprite(file_dir/"pictures/strength.png", 0.2)
+        rand_num = random.randint(1,2)
+        print(f"rand num is {rand_num}")
+        if rand_num == 1:
+            power_up = PowerUp(file_dir/"pictures/strength.png", 0.2, "strength")
+        if rand_num == 2:
+            power_up = PowerUp(file_dir/"pictures/speed.png", 0.2, "speed")
         power_up.center_y = 15*constants.GRID_PIXEL_SIZE
         #set the x to the enemy's location, as if he dropped it
         power_up.center_x = random.randint(1,12)*constants.GRID_PIXEL_SIZE
