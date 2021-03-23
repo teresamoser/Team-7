@@ -1,6 +1,6 @@
 from pathlib import Path
 from game.point import Point
-from game.bomb import Bomb
+# from game.bomb import Bomb
 from game import constants
 import arcade
 import random
@@ -8,7 +8,6 @@ import random
 
 class KaboomView(arcade.View):
     """ Main application class. """
-
     def __init__(self, level,score):
         """
         Initializer
@@ -23,9 +22,10 @@ class KaboomView(arcade.View):
         self.score = score
         # Drawing non-moving walls separate from moving walls improves performance.
         self.static_wall_list = None
-        self.moving_wall_list = None
+        self.bomb_list = None
         self.enemy_list = None
         self.player_list = None
+        self.power_up_list = None
 
         # Set up the player
         self.player_sprite = None
@@ -41,9 +41,10 @@ class KaboomView(arcade.View):
         # Sprite lists
         self.all_wall_list = arcade.SpriteList()
         self.static_wall_list = arcade.SpriteList()
-        self.moving_wall_list = arcade.SpriteList()
+        self.bomb_list = arcade.SpriteList()
         self.player_list = arcade.SpriteList()
         self.enemy_list = arcade.SpriteList()
+        self.power_up_list = arcade.SpriteList()
 
         # Set up the player
         #change player to a tray/basket
@@ -96,14 +97,21 @@ class KaboomView(arcade.View):
 
         # Draw the sprites.
         self.static_wall_list.draw()
-        self.moving_wall_list.draw()
+        self.bomb_list.draw()
         file_dir = Path(__file__).parent.parent
         self.enemy_list.draw()
+        self.power_up_list.draw()
 
-        for x in self.moving_wall_list:
+        for x in self.bomb_list:
+            sound = arcade.Sound(":resources:sounds/explosion2.wav")    
             #this is in charge of deleting the bombs. The 2 * grid pixel size is the x that it disappears at.
             if (x.center_y<= x.boundary_bottom + (2 * constants.GRID_PIXEL_SIZE)):
-                self.moving_wall_list.remove(x)
+                
+                # if(bomb goes in bucket):
+                #     sound = arcade.Sound(file_dir/"sounds/steam hiss.wav")
+
+                sound.play()
+                self.bomb_list.remove(x)
                 self.all_wall_list.remove(x)
                 
                 # x.set_texture(file_dir/"pictures/Explosion.png")
@@ -135,6 +143,22 @@ class KaboomView(arcade.View):
         if key == arcade.key.LEFT or key == arcade.key.RIGHT or key == arcade.key.D or key == arcade.key.A:
             self.player_sprite.change_x = 0
     #this function spawns the bombs
+    def power_up_effect(self, power_up):
+        if power_up == "stretch":
+            self.player_sprite._set_width(400)
+        if power_up == "speed":
+            self.player_sprite._set_width(400)        
+    def spawn_power_up(self):
+        file_dir = Path(__file__).parent.parent
+        power_up = arcade.Sprite(file_dir/"pictures/strength.png", 0.2)
+        power_up.center_y = 15*constants.GRID_PIXEL_SIZE
+        #set the x to the enemy's location, as if he dropped it
+        power_up.center_x = random.randint(1,12)*constants.GRID_PIXEL_SIZE
+        power_up.boundary_top = 20 * constants.GRID_PIXEL_SIZE
+        power_up.boundary_bottom = 0 
+        #how fast the bombs go
+        power_up.change_y = -(4 + self.level) * constants.SPRITE_SCALING
+        self.power_up_list.append(power_up)
     def spawn_bomb(self):
         wall = arcade.Sprite(":resources:images/tiles/bomb.png", constants.SPRITE_SCALING)
         wall.center_y = 11*constants.GRID_PIXEL_SIZE
@@ -143,9 +167,10 @@ class KaboomView(arcade.View):
         wall.boundary_top = 11 * constants.GRID_PIXEL_SIZE
         wall.boundary_bottom = 0 
         #how fast the bombs go
-        wall.change_y = (4 + self.level) * constants.SPRITE_SCALING
+        wall.change_y = -(4 + self.level) * constants.SPRITE_SCALING
         self.all_wall_list.append(wall)
-        self.moving_wall_list.append(wall)
+        self.bomb_list.append(wall)
+        
     def on_update(self, delta_time):
         """ Movement and game logic """
 
@@ -154,9 +179,17 @@ class KaboomView(arcade.View):
 
         # --- Manage Scrolling ---
         self.enemy_list.update()
+        self.power_up_list.update()
+        #
+        #
+        #The next few lines controls how often the bombs spawn
+        #
         x = random.randint(0,70-(self.level * 2))
         if x == 4:
             self.spawn_bomb()
+        x = random.randint(0,400)
+        if x == 4:
+            self.spawn_power_up()
         # Track if we need to change the viewport
         left_boundary = self.view_left + constants.VIEWPORT_MARGIN -100
         right_boundary = self.view_left + constants.SCREEN_WIDTH - constants.RIGHT_MARGIN + 300
