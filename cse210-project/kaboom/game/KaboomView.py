@@ -20,6 +20,7 @@ class KaboomView(arcade.View):
         # We use an all-wall list to check for collisions.
         self.all_wall_list = None
         self.score = score
+        self.lives = 5
         # Drawing non-moving walls separate from moving walls improves performance.
         self.static_wall_list = None
         self.bomb_list = None
@@ -113,9 +114,15 @@ class KaboomView(arcade.View):
                     print("collide")
                     sound = arcade.Sound(file_dir/"sounds/steam hiss.wav")
                     #score add
+                    self.score += 1
                 else:
                     print()
                     #life drop
+                    self.lives -= 1
+                    if self.lives <= 0:
+                        game_view = GameOverView(self.score)
+                        # game_view.setup()
+                        self.window.show_view(game_view)
                 sound.play()
                 self.bomb_list.remove(x)
                 
@@ -140,6 +147,12 @@ class KaboomView(arcade.View):
         distance = self.player_sprite.right
         output = f"Distance: {distance}"
         arcade.draw_text(output, self.view_left + 10, self.view_bottom + 20,
+                         arcade.color.WHITE, 14)
+        output = f"Score: {self.score}"
+        arcade.draw_text(output, self.view_left + 700, self.view_bottom + 20,
+                         arcade.color.WHITE, 14)
+        output = f"Lives: {self.lives}"
+        arcade.draw_text(output, self.view_left + 625, self.view_bottom + 20,
                          arcade.color.WHITE, 14)
 
     def on_key_press(self, key, modifiers):
@@ -257,5 +270,26 @@ class ChangeLevelView(arcade.View):
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         """ If the user presses the mouse button, start the game. """
         game_view = KaboomView(self.level + 1, self.score)
+        game_view.setup()
+        self.window.show_view(game_view)
+
+class GameOverView(arcade.View):
+    def __init__(self,score):
+        self.score = score
+        super().__init__()
+    def on_show(self):
+        arcade.set_background_color(arcade.csscolor.DARK_RED)
+    def on_draw(self):
+        """ Draw this view """
+        arcade.start_render()
+        arcade.draw_text("Game Over", constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2,
+                         arcade.color.WHITE, font_size=50, anchor_x="center")
+        arcade.draw_text("Your score: " + (str)(self.score), constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2-75,
+                         arcade.color.WHITE, font_size=20, anchor_x="center")                         
+        arcade.draw_text("Click to Retry!", constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2-150,
+                         arcade.color.WHITE, font_size=20, anchor_x="center")
+    def on_mouse_press(self, _x, _y, _button, _modifiers):
+        """ If the user presses the mouse button, start the game. """
+        game_view = KaboomView(1, self.score)
         game_view.setup()
         self.window.show_view(game_view)
