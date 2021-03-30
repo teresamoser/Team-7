@@ -21,6 +21,8 @@ class KaboomView(arcade.View):
         self.all_wall_list = None
         self.score = score
         self.lives = 5
+        self.timeLeft = None   
+        self.total_time = 30 
         # Drawing non-moving walls separate from moving walls improves performance.
         self.background_sprite_list = None
         self.static_wall_list = None
@@ -28,7 +30,9 @@ class KaboomView(arcade.View):
         self.enemy_list = None
         self.player_list = None
         self.power_up_list = None
-
+        self.active_speed = 1
+        self.active_power_up_list = None
+       
         # Set up the player
         self.player_sprite = None
         self.physics_engine = None
@@ -48,6 +52,7 @@ class KaboomView(arcade.View):
         self.player_list = arcade.SpriteList()
         self.enemy_list = arcade.SpriteList()
         self.power_up_list = arcade.SpriteList()
+        self.active_power_up_list = arcade.SpriteList()
 
         # Set up the player
         #change player to a tray/basket
@@ -55,6 +60,8 @@ class KaboomView(arcade.View):
 
         self.player_sprite = arcade.Sprite(file_dir/"pictures/bucket.png", 0.3)
         self.player_sprite.center_x = 2 * constants.GRID_PIXEL_SIZE
+        self.player_sprite._set_width(150)
+
         self.player_sprite.center_y = 2 * constants.GRID_PIXEL_SIZE
         self.player_list.append(self.player_sprite)
         self.bomber_man_sprite = arcade.Sprite(file_dir/"pictures/bomber man.png", 0.06)
@@ -121,12 +128,10 @@ class KaboomView(arcade.View):
                 # if(bomb goes in bucket):
                 #     sound = arcade.Sound(file_dir/"sounds/steam hiss.wav")
                 if x.collides_with_sprite(self.player_sprite):
-                    print("collide")
                     sound = arcade.Sound(file_dir/"sounds/steam hiss.wav")
                     #score add
                     self.score += 1
                 else:
-                    print()
                     #life drop
                     self.lives -= 1
                     if self.lives <= 0:
@@ -145,8 +150,9 @@ class KaboomView(arcade.View):
                 # if(bomb goes in bucket):
                 #     sound = arcade.Sound(file_dir/"sounds/steam hiss.wav")
                 if x.collides_with_sprite(self.player_sprite):
-                    print("collide")
-                    self.power_up_effect(x.type)
+                    self.power_up_effect(x)
+                    x.active = True
+                    self.active_power_up_list.append(x)
                 sound.play()
                 self.power_up_list.remove(x)
         self.player_list.draw()
@@ -154,8 +160,8 @@ class KaboomView(arcade.View):
         # Put the text on the screen.
         # Adjust the text position based on the viewport so that we don't
         # scroll the text too.
-        distance = self.player_sprite.right
-        output = f"Distance: {distance}"
+        self.timeLeft = int(self.total_time) % 60
+        output = f"Time: {self.timeLeft}"
         arcade.draw_text(output, self.view_left + 10, self.view_bottom + 20,
                          arcade.color.WHITE, 14)
         output = f"Score: {self.score}"
@@ -171,9 +177,9 @@ class KaboomView(arcade.View):
         """
 
         if key == arcade.key.LEFT or key == arcade.key.A:
-            self.player_sprite.change_x = -constants.MOVEMENT_SPEED
+            self.player_sprite.change_x = -constants.MOVEMENT_SPEED * self.active_speed
         elif key == arcade.key.RIGHT or key == arcade.key.D:
-            self.player_sprite.change_x = constants.MOVEMENT_SPEED
+            self.player_sprite.change_x = constants.MOVEMENT_SPEED* self.active_speed
         elif key == arcade.key.P:
             self.level_over()
     def on_key_release(self, key, modifiers):
@@ -184,21 +190,28 @@ class KaboomView(arcade.View):
             self.player_sprite.change_x = 0
     #this function spawns the bombs
     def power_up_effect(self, power_up):
-        if power_up == "stretch":
+        if power_up.type == "stretch":
             self.player_sprite._set_width(400)
-        if power_up == "speed":
-            self.player_sprite.change_x *= 1.5 
-        if power_up == "Acid" :
-            self.player_sprite._set_width(50)     
+        if power_up.type == "speed":
+            self.active_speed *= 1.5
+        if power_up.type == "Acid" :
+            self.player_sprite._set_width(50)  
+    def reverse_power_up_effect(self, power_up):
+        if power_up.type == "stretch":
+            self.player_sprite._set_width(150)
+        if power_up.type == "speed":
+            self.active_speed = 1
+        if power_up.type == "Acid" :
+            self.player_sprite._set_width(150)    
     def spawn_power_up(self):
         file_dir = Path(__file__).parent.parent
         rand_num = random.randint(1,3)
         if rand_num == 1:
-            power_up = PowerUp(":resources:images/tiles/mushroomRed.png", 1.0, "stretch")
+            power_up = PowerUp(":resources:images/tiles/mushroomRed.png", 1.0, "stretch", 5)
         if rand_num == 2:
-            power_up = PowerUp(file_dir/"pictures/speed.png", 0.2, "speed")
+            power_up = PowerUp(file_dir/"pictures/speed.png", 0.2, "speed", 5)
         if rand_num == 3:
-            power_up = PowerUp(":resources:images/enemies/slimePurple.png", 1.5, "Acid")
+            power_up = PowerUp(":resources:images/enemies/slimePurple.png", 1.0, "Acid", 5)
         power_up.center_y = 15*constants.GRID_PIXEL_SIZE
         #set the x to the enemy's location, as if he dropped it
         power_up.center_x = random.randint(1,12)*constants.GRID_PIXEL_SIZE
@@ -225,11 +238,21 @@ class KaboomView(arcade.View):
 
         # Call update on all sprites
         self.physics_engine.update()
+        self.total_time -= delta_time
 
         # --- Manage Scrolling ---
         self.enemy_list.update()
         self.power_up_list.update()
+        for x in self.active_power_up_list:
+            x.diminish_time(delta_time)
+            if(x.timeLeft <= 0):
+                self.reverse_power_up_effect(x)
+                self.active_power_up_list.remove(x)
+
+
         self.bomb_list.update()
+        if self.timeLeft == 0:
+            self.level_over()
         #
         #
         #The next few lines controls how often the bombs spawn
@@ -306,6 +329,28 @@ class GameOverView(arcade.View):
                          arcade.color.WHITE, font_size=20, anchor_x="center")
     def on_mouse_press(self, _x, _y, _button, _modifiers):
         """ If the user presses the mouse button, start the game. """
-        game_view = KaboomView(1, self.score)
+        game_view = StartView()
+        self.window.show_view(game_view)
+
+
+
+
+class StartView(arcade.View):
+    def __init__(self):
+         super().__init__()
+    def on_show(self):
+        arcade.set_background_color(arcade.csscolor.DARK_SLATE_BLUE)
+    def on_draw(self):
+        """ Draw this view """
+        arcade.start_render()
+        arcade.draw_text("Kaboom", constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2,
+                         arcade.color.WHITE, font_size=50, anchor_x="center")
+        arcade.draw_text("Catch all the bombs before they explode. \nUse the arrow keys or wasd to move", constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2-75,
+                         arcade.color.WHITE, font_size=20, anchor_x="center")                         
+        arcade.draw_text("Click to Start!", constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2-150,
+                         arcade.color.WHITE, font_size=20, anchor_x="center")
+    def on_mouse_press(self, _x, _y, _button, _modifiers):
+        """ If the user presses the mouse button, start the game. """
+        game_view = KaboomView(1,0)
         game_view.setup()
         self.window.show_view(game_view)
