@@ -22,6 +22,7 @@ class KaboomView(arcade.View):
         self.score = score
         self.lives = 5
         # Drawing non-moving walls separate from moving walls improves performance.
+        self.background_sprite_list = None
         self.static_wall_list = None
         self.bomb_list = None
         self.enemy_list = None
@@ -40,6 +41,7 @@ class KaboomView(arcade.View):
         """ Set up the game and initialize the variables. """
 
         # Sprite lists
+        self.background_sprite_list = arcade.SpriteList()
         self.all_wall_list = arcade.SpriteList()
         self.static_wall_list = arcade.SpriteList()
         self.bomb_list = arcade.SpriteList()
@@ -79,7 +81,14 @@ class KaboomView(arcade.View):
                                            gravity_constant=constants.GRAVITY)
 
         # Set the background color
-        arcade.set_background_color(arcade.color.AMAZON)
+        arcade.set_background_color(arcade.color.BLACK)
+
+        # We use a loop to create a whole bunch of brick tiles to go in the background.
+        for x in range(0, 900, 128):
+            for y in range(0, 700, 128):
+                sprite = arcade.Sprite(":resources:images/tiles/brickTextureWhite.png")
+                sprite.position = x, y
+                self.background_sprite_list.append(sprite)
 
         # Set the viewport boundaries
         # These numbers set where we have 'scrolled' to.
@@ -97,6 +106,7 @@ class KaboomView(arcade.View):
         arcade.start_render()
 
         # Draw the sprites.
+        self.background_sprite_list.draw()
         self.static_wall_list.draw()
         self.bomb_list.draw()
         file_dir = Path(__file__).parent.parent
@@ -177,14 +187,18 @@ class KaboomView(arcade.View):
         if power_up == "stretch":
             self.player_sprite._set_width(400)
         if power_up == "speed":
-            self.player_sprite.change_x *= 1.5       
+            self.player_sprite.change_x *= 1.5 
+        if power_up == "Acid" :
+            self.player_sprite._set_width(50)     
     def spawn_power_up(self):
         file_dir = Path(__file__).parent.parent
-        rand_num = random.randint(1,2)
+        rand_num = random.randint(1,3)
         if rand_num == 1:
-            power_up = PowerUp(file_dir/"pictures/strength.png", 0.2, "stretch")
+            power_up = PowerUp(":resources:images/tiles/mushroomRed.png", 1.0, "stretch")
         if rand_num == 2:
             power_up = PowerUp(file_dir/"pictures/speed.png", 0.2, "speed")
+        if rand_num == 3:
+            power_up = PowerUp(":resources:images/enemies/slimePurple.png", 1.5, "Acid")
         power_up.center_y = 15*constants.GRID_PIXEL_SIZE
         #set the x to the enemy's location, as if he dropped it
         power_up.center_x = random.randint(1,12)*constants.GRID_PIXEL_SIZE
@@ -194,6 +208,8 @@ class KaboomView(arcade.View):
         power_up.change_y = -(4 + self.level) * constants.SPRITE_SCALING
         self.power_up_list.append(power_up)
     def spawn_bomb(self):
+        sounda = arcade.Sound(":resources:sounds/lose1.wav")
+        sounda.play()
         wall = arcade.Sprite(":resources:images/tiles/bomb.png", constants.SPRITE_SCALING)
         wall.center_y = 11*constants.GRID_PIXEL_SIZE
         #set the x to the enemy's location, as if he dropped it
