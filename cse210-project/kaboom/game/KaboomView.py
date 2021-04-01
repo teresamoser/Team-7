@@ -1,6 +1,4 @@
 from pathlib import Path
-from game.point import Point
-# from game.bomb import Bomb
 from game import constants
 import arcade
 import random
@@ -193,6 +191,9 @@ class KaboomView(arcade.View):
             self.player_sprite.change_x = 0
     #this function spawns the bombs
     def power_up_effect(self, power_up):
+        """
+        Implements the powerup's effect.
+        """
         if power_up.type == "stretch":
             self.player_sprite._set_width(400)
         if power_up.type == "speed":
@@ -200,6 +201,9 @@ class KaboomView(arcade.View):
         if power_up.type == "Acid" :
             self.player_sprite._set_width(50)  
     def reverse_power_up_effect(self, power_up):
+        """
+        Reverses the effects of powerups.
+        """        
         if power_up.type == "stretch":
             self.player_sprite._set_width(150)
         if power_up.type == "speed":
@@ -207,6 +211,9 @@ class KaboomView(arcade.View):
         if power_up.type == "Acid" :
             self.player_sprite._set_width(150)    
     def spawn_power_up(self):
+        """
+        Spawns a power up.
+        """        
         file_dir = Path(__file__).parent.parent
         rand_num = random.randint(1,3)
         if rand_num == 1:
@@ -225,6 +232,9 @@ class KaboomView(arcade.View):
         power_up.change_y = -(4 + self.level) * constants.SPRITE_SCALING
         self.power_up_list.append(power_up)
     def spawn_bomb(self):
+        """
+        Spawns a bomb.
+        """        
         sounda = arcade.Sound(":resources:sounds/lose1.wav")
         sounda.play()
         wall = arcade.Sprite(":resources:images/tiles/bomb.png", constants.SPRITE_SCALING)
@@ -287,6 +297,9 @@ class KaboomView(arcade.View):
             self.player_sprite.right = right_boundary
             changed = True
     def level_over(self):
+        """
+        Called whenever the player moves on to the next level.
+        """
         game_view = ChangeLevelView(self.level,self.score)
         self.window.show_view(game_view)        
 
@@ -295,6 +308,9 @@ class KaboomView(arcade.View):
 
 
 class ChangeLevelView(arcade.View):
+    """
+    Called whenever the level ends. This is the in between level screen.
+    """
     def __init__(self, level,score):
         self.level = level
         self.score = score
@@ -311,12 +327,15 @@ class ChangeLevelView(arcade.View):
         arcade.draw_text("Click to Start next level!", constants.SCREEN_WIDTH / 2, constants.SCREEN_HEIGHT / 2-150,
                          arcade.color.WHITE, font_size=20, anchor_x="center")
     def on_mouse_press(self, _x, _y, _button, _modifiers):
-        """ If the user presses the mouse button, start the game. """
+        """ If the user presses the mouse button, start the next level. """
         game_view = KaboomView(self.level + 1, self.score)
         game_view.setup()
         self.window.show_view(game_view)
 
 class GameOverView(arcade.View):
+    """
+    Game over screen.
+    """
     def __init__(self,score):
         self.score = score
         super().__init__()
@@ -340,6 +359,9 @@ class GameOverView(arcade.View):
 
 
 class StartView(arcade.View):
+    """
+    Instruction screen.
+    """
     def __init__(self):
          super().__init__()
     def on_show(self):
