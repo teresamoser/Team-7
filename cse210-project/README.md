@@ -4,8 +4,10 @@ the screen to catch all the falling bombs so the fuse is put out. The goal is no
 
 ## Getting Started
 ---
-[how to install and run the program]
-
+Our game is based on Python language and uses Arcade to help with the game playablility. The game is to catch the bombs that fall from the bomber man who is running across the top of a brick wall. The player moves the bucket that is filled with water to difuse the bombs. The object is to catch the bombs before they explode.
+There are power ups in the game, which last 5 seconds each. The mushroom will make the bucket get wider so you can catch more at one time. The lightning will help you move faster. The purple blob is acid and melts the bucket to a smaller width. You can still catch bombs and powerups, but you have to do this before the bombs explode.
+The game has level ups. Each level will increase the speed of how fast the bombs and power ups fall. It makes it harder and harder to catch what is falling.
+The game ends when "x" amount of bombs explode and the end game screen will appear and ask if you want to play again.
 ## Project Structure
 ---
 The project files and folders are organized as follows:
@@ -23,7 +25,10 @@ root                    (project root folder)
 
 ## Required Technologies
 ---
-[list required libraries]
+Arcade for python
+Import random engine
+
+
 
 ## Authors
 ---
