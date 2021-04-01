@@ -91,6 +91,8 @@ class KaboomView(arcade.View):
         arcade.set_background_color(arcade.color.BLACK)
 
         # We use a loop to create a whole bunch of brick tiles to go in the background.
+        # Author: Teresa Moser
+        # This will draw the background of a brick wall.
         for x in range(0, 900, 128):
             for y in range(0, 700, 128):
                 sprite = arcade.Sprite(":resources:images/tiles/brickTextureWhite.png")
@@ -121,6 +123,7 @@ class KaboomView(arcade.View):
         self.power_up_list.draw()
 
         for x in self.bomb_list:
+            # this sound is the initial sound the bombs falling will make. ~ Teresa Moser
             sound = arcade.Sound(":resources:sounds/explosion2.wav")    
             #this is in charge of deleting the bombs. The 2 * grid pixel size is the x that it disappears at.
             if (x.center_y<= x.boundary_bottom + (2 * constants.GRID_PIXEL_SIZE)):
@@ -210,6 +213,7 @@ class KaboomView(arcade.View):
             power_up = PowerUp(":resources:images/tiles/mushroomRed.png", 1.0, "stretch", 5)
         if rand_num == 2:
             power_up = PowerUp(file_dir/"pictures/speed.png", 0.2, "speed", 5)
+            # this power up is purple acid and makes the bucket skinny so it will be harder to catch the bombs.~. Teresa Moser
         if rand_num == 3:
             power_up = PowerUp(":resources:images/enemies/slimePurple.png", 1.0, "Acid", 5)
         power_up.center_y = 15*constants.GRID_PIXEL_SIZE
