@@ -1,6 +1,6 @@
 # Bomb's Away!
-Bomb's Away!: An arcade game where you control the tray of water at the bottom of 
-the screen to catch all the falling bombs so the fuse is put out. The goal is not to miss one or they will explode and the round ends. 
+Bomb's Away!: An arcade game where you control the bucket of water at the bottom of 
+the screen to catch all the falling bombs so the fuse is put out. The goal is not to miss one or they will explode. 
 
 ## Getting Started
 ---
@@ -25,14 +25,15 @@ root                    (project root folder)
 
 ## Required Technologies
 ---
-Arcade for python
+Arcade for python;
+
 Import random engine
 
 
 
 ## Authors
 ---
-Teresa Moser   tmoser.moser@gmail.com
-Matt Tyra    mtyra321@gmai.com
-Bethany Steiner    ste19005@byui.edu
+Teresa Moser   tmoser.moser@gmail.com;
+Matt Tyra    mtyra321@gmai.com;
+Bethany Steiner    ste19005@byui.edu;
 
